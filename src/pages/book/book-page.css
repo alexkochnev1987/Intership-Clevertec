@@ -1,0 +1,19 @@
+.book__description {
+  min-height: 4rem;
+  width: 100%;
+  background: #f9f9fa;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 575px) {
+  .book__description {
+    height: 92px;
+    margin-top: 7px;
+    padding: 20px 0;
+    width: 100%;
+    background: #f9f9fa;
+    display: flex;
+    align-items: center;
+  }
+}

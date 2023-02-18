@@ -1,0 +1,13 @@
+.feedback__container {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  max-width: 730px;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.feedback__head {
+  align-items: center;
+  gap: 1.5rem;
+}

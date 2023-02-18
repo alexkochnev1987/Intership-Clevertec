@@ -1,0 +1,51 @@
+.footer__container {
+  max-width: 1110px;
+  width: 100%;
+  border-top: 1px solid rgba(191, 196, 201, 1);
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+}
+
+.footer__icons {
+  justify-content: space-between;
+  align-items: center;
+  width: 168px;
+}
+
+.footer__img {
+  height: 24px;
+  width: 24px;
+}
+
+.facebook {
+  width: 10px;
+  height: 18px;
+}
+
+.instagram {
+  width: 18px;
+  height: 18px;
+}
+
+.vk {
+  width: 22px;
+  height: 13px;
+}
+
+.linked-in {
+  width: 18px;
+  height: 18px;
+}
+
+@media screen and (max-width: 575px) {
+  .footer__container {
+    height: 100%;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .footer__text {
+    flex-direction: column;
+  }
+}

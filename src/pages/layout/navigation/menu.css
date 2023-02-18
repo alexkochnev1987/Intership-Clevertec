@@ -1,0 +1,21 @@
+.nav-container {
+  width: 30%;
+}
+
+.nav__all-books {
+  padding-left: 1.25rem;
+}
+.nav__first-link {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.nav__books-categories {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.nav__books-span {
+  padding-right: 0.375rem;
+}
