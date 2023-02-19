@@ -25,6 +25,7 @@ const ErrorWrapper = styled.div`
 
 const ErrorContainer = styled.div`
   width: 100%;
+  max-width: 1110px;
   padding: 27px 33px;
   background: #feebea;
   border: 1.5px solid #f42c4f;
@@ -101,6 +102,14 @@ const Line = styled.span`
   }
   :last-child {
     transform: rotate(-45deg) translate(-7px, 6px);
+  }
+  @media screen and (min-width: 576px) and (max-width: 900px) {
+    :first-child {
+      transform: rotate(45deg) translate(2px, 8px);
+    }
+    :last-child {
+      transform: rotate(-45deg) translate(-7px, 0px);
+    }
   }
 `;
 
