@@ -12,11 +12,14 @@ export const Rank = (props: { rank: number | null; showRank?: boolean; smallGap?
       {rank ? (
         <div className={view ? 'rank-wrapper' : 'rank-wrapper rank__wrapper-small'}>
           <div className={smallGap ? 'rank__gap-small flex' : 'rank__gap flex'}>
-            {Array(5)
-              .fill(1)
-              .map((_, index) => (
-                <img src={rank >= index + 1 ? starFill : star} alt='star' className={view ? '' : 'rank__star__small'} />
-              ))}
+            {[...Array(5)].map((_, index) => (
+              <img
+                src={rank >= index + 1 ? starFill : star}
+                alt='star'
+                className={view ? '' : 'rank__star__small'}
+                key={`${index + 1}`}
+              />
+            ))}
           </div>
           {showRank && <p className='h5'>{rank}</p>}
         </div>

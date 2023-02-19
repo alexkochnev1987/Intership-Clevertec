@@ -17,7 +17,7 @@ export const MainPage = () => {
       <Search view={view} setView={setView} />
       <div className={view ? 'main__cards' : 'main__cards-flex'}>
         {myBooks.map((book) => (
-          <NavLink to={`/books/${book.categories[0]}/${book.id}`} key={book.id} className='main-page-button'>
+          <NavLink to={`${book.id}`} key={book.id} className='main-page-button'>
             <CardBook book={book} view={view} />
           </NavLink>
         ))}
