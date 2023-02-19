@@ -9,65 +9,6 @@ import { BurgerContext } from '../layout';
 
 import './menu.css';
 
-// const BookCategories = [
-//   {
-//     name: 'Бизнес книги',
-//     count: 14,
-//   },
-//   {
-//     name: 'Детективы',
-//     count: 8,
-//   },
-//   {
-//     name: 'Детские книги',
-//     count: 10,
-//   },
-//   {
-//     name: 'Зарубежная литература',
-//     count: 2,
-//   },
-//   {
-//     name: 'История',
-//     count: 5,
-//   },
-//   {
-//     name: 'Классическая литература',
-//     count: 12,
-//   },
-//   {
-//     name: 'Книги по психологии',
-//     count: 11,
-//   },
-//   {
-//     name: 'Компьютерная литература',
-//     count: 54,
-//   },
-//   {
-//     name: 'Культура и искусство',
-//     count: 0,
-//   },
-//   {
-//     name: 'Наука и образование',
-//     count: 2,
-//   },
-//   {
-//     name: 'Публицистическая литература',
-//     count: 0,
-//   },
-//   {
-//     name: 'Справочники',
-//     count: 10,
-//   },
-//   {
-//     name: 'Фантастика',
-//     count: 12,
-//   },
-//   {
-//     name: 'Юмористическая литература',
-//     count: 10,
-//   },
-// ];
-
 enum NavigationLinks {
   showcase = 'Витрина книг',
   allBooks = 'Все книги',
@@ -139,10 +80,10 @@ const Button = styled.button`
 
 export const NavigationPage = () => {
   const { close, setState } = useContext(BurgerContext);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [isClicked, setIsClicked] = useState(false);
   const openNav = () => (isClicked ? setShow(!show) : setIsClicked(true));
-  const categories = useAppSelector((state) => state.books.categories);
+  const categories = useAppSelector((state) => state.categories.categories);
   const books = useAppSelector((state) => state.books.books);
 
   const closeNav = () => {

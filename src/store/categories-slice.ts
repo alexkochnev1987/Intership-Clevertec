@@ -2,6 +2,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { HOST } from './book-slice';
+import { setLoadingFalse, setLoadingTrue } from './loader-slice';
 
 interface CategoriesReducerState {
   categories: Categories[];
@@ -23,11 +24,18 @@ interface Categories {
 
 export const fetchCategories = createAsyncThunk<Categories[], undefined, { rejectValue: string }>(
   'books/fetchCategories',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
+    dispatch(setLoadingTrue());
     const response = await fetch(`${HOST}/api/categories`);
 
-    if (!response.ok) return rejectWithValue('Server Error');
+    if (!response.ok) {
+      dispatch(setLoadingFalse());
+
+      return rejectWithValue('Server Error');
+    }
     const data: Categories[] = await response.json();
+
+    dispatch(setLoadingFalse());
 
     return data;
   }

@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { setLoadingFalse, setLoadingTrue } from './loader-slice';
+
 export const HOST = 'https://strapi.cleverland.by';
 
 export interface Book {
   issueYear: string;
-  rating: number;
+  rating: number | null;
   title: string;
   authors: string[];
   image: {
@@ -60,11 +62,18 @@ interface Categories {
 
 export const fetchBooks = createAsyncThunk<Book[], undefined, { rejectValue: string }>(
   'books/fetchBooks',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
+    dispatch(setLoadingTrue());
     const response = await fetch(`${HOST}/api/books`);
 
-    if (!response.ok) return rejectWithValue('Server Error');
+    if (!response.ok) {
+      dispatch(setLoadingFalse());
+
+      return rejectWithValue('Server Error');
+    }
     const data: Book[] = await response.json();
+
+    dispatch(setLoadingFalse());
 
     return data;
   }

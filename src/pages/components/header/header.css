@@ -32,28 +32,7 @@
   border: none;
 }
 
-/* .header__burger {
-  display: block;
-  width: 27px;
-  height: 3px;
-  margin-bottom: 5px;
-  position: relative;
-  background: #363636;
-  border-radius: 3px;
-  z-index: 1;
-} */
-
-/* .header__burger-button {
-  background: none;
-  border: none;
-  display: none;
-} */
-
 @media screen and (min-width: 576px) and (max-width: 900px) {
-  /* .header__burger-button {
-    display: block;
-  } */
-
   .header__name {
     font-weight: 700;
     font-size: 32px;
@@ -83,8 +62,4 @@
     justify-content: flex-start;
     gap: 26px;
   }
-  /* .header__burger {
-    width: 24px;
-    height: 2px;
-  } */
 }

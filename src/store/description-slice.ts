@@ -2,6 +2,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { HOST } from './book-slice';
+import { setLoadingFalse, setLoadingTrue } from './loader-slice';
 
 export interface ImageBook {
   url: string;
@@ -76,11 +77,18 @@ const initialState: BookReducerState = {
 
 export const fetchDescription = createAsyncThunk<BookDescription, string, { rejectValue: string }>(
   'books/fetchBookById',
-  async (id: string, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue, dispatch }) => {
+    dispatch(setLoadingTrue());
     const response = await fetch(`${HOST}/api/books/${id}`);
 
-    if (!response.ok) return rejectWithValue('Server Error');
+    if (!response.ok) {
+      dispatch(setLoadingFalse());
+
+      return rejectWithValue('Server Error');
+    }
     const data: BookDescription = await response.json();
+
+    dispatch(setLoadingFalse());
 
     return data;
   }

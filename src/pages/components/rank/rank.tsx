@@ -3,24 +3,25 @@ import starFill from '../../../assets/img/star-f.png';
 
 import './rank.css';
 
-export const Rank = (props: { rank: number; showRank?: boolean; smallGap?: boolean; view?: boolean }) => {
+export const Rank = (props: { rank: number | null; showRank?: boolean; smallGap?: boolean; view?: boolean }) => {
   const { rank, showRank, smallGap, view } = props;
+  const noScore = 'еще нет оценок';
 
   return (
     <div>
-      {rank > 0 ? (
+      {rank ? (
         <div className={view ? 'rank-wrapper' : 'rank-wrapper rank__wrapper-small'}>
           <div className={smallGap ? 'rank__gap-small flex' : 'rank__gap flex'}>
-            <img src={starFill} alt='star' className={view ? '' : 'rank__star__small'} />
-            <img src={starFill} alt='star' className={view ? '' : 'rank__star__small'} />
-            <img src={starFill} alt='star' className={view ? '' : 'rank__star__small'} />
-            <img src={starFill} alt='star' className={view ? '' : 'rank__star__small'} />
-            <img src={star} alt='star' className={view ? '' : 'rank__star__small'} />
+            <img src={rank >= 1 ? starFill : star} alt='star' className={view ? '' : 'rank__star__small'} />
+            <img src={rank >= 2 ? starFill : star} alt='star' className={view ? '' : 'rank__star__small'} />
+            <img src={rank >= 3 ? starFill : star} alt='star' className={view ? '' : 'rank__star__small'} />
+            <img src={rank >= 4 ? starFill : star} alt='star' className={view ? '' : 'rank__star__small'} />
+            <img src={rank >= 5 ? starFill : star} alt='star' className={view ? '' : 'rank__star__small'} />
           </div>
           {showRank && <p className='h5'>{rank}</p>}
         </div>
       ) : (
-        <p className='inactive-text body-small'>еще нет оценок</p>
+        <p className='inactive-text body-small'>{noScore}</p>
       )}
     </div>
   );
