@@ -1,0 +1,137 @@
+.card__container {
+  max-width: 190px;
+  display: grid;
+  grid-template-rows: 242px 40px 54px 36px 56px;
+  max-height: 470px;
+  row-gap: 0.5rem;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+    0px 1px 5px rgba(191, 196, 201, 0.24);
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.card__container-list {
+  display: grid;
+  height: 218px;
+  grid-template-columns: 120px 1fr;
+  grid-template-rows: auto auto 40px;
+  padding: 24px 24px 24px 24px;
+  gap: 1rem;
+  box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+    0px 1px 5px rgba(191, 196, 201, 0.24);
+  border-radius: 10px;
+  text-align: start;
+}
+
+.card__img-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__page__img {
+  width: 100%;
+  max-width: 174px;
+}
+
+.card__img-container-grid {
+  grid-row-start: 1;
+  grid-row-end: 4;
+}
+
+.card__image-flex {
+  width: 120px;
+}
+
+.cat__block {
+  background: #f9f9fa;
+  border: 1px solid #a7a7a7;
+  border-radius: 10px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 174px;
+  height: 242px;
+}
+
+.cat__line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 170px;
+}
+
+.card__content-flex {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.card__content-text {
+  grid-column-start: 2;
+  grid-column-end: 5;
+}
+.card__rank__container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.card__rank__container-grid {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  grid-column-start: 2;
+  grid-column-end: 4;
+}
+
+.card__stars {
+  padding: 2px;
+}
+
+.order0 {
+  order: 0;
+}
+.order1 {
+  order: 1;
+}
+
+.order2 {
+  order: 2;
+}
+
+.card__rank__container-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 575px) {
+  .card__container {
+    max-width: 288px;
+    padding: 8px 16px 16px 16px 16px;
+    width: 100%;
+    grid-template-rows: 242px auto 1fr 1fr auto;
+  }
+  .card__container-list {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    padding: 24px 24px 24px 16px;
+    gap: 16px;
+    box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+      0px 1px 5px rgba(191, 196, 201, 0.24);
+    border-radius: 10px;
+  }
+
+  .card__rank__container {
+    padding-top: 10px;
+    padding-bottom: 3px;
+  }
+
+  .card__rank__container-grid {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    padding: 0;
+  }
+}

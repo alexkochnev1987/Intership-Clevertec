@@ -1,0 +1,16 @@
+.terms__ul {
+  color: #363636;
+}
+
+.terms__li {
+  padding-left: 30px;
+}
+
+.terms__ul > li {
+  padding-top: 32px;
+}
+
+.terms__li > li {
+  padding-top: 16px;
+  font-weight: 400;
+}

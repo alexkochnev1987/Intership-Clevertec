@@ -1,0 +1,106 @@
+.search__container {
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.search__inputs {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  max-width: 516px;
+  gap: 16px;
+}
+
+.search__input {
+  width: 100%;
+  border: none;
+  height: 38px;
+  box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+    0px 1px 5px rgba(191, 196, 201, 0.24);
+  border-radius: 599px;
+  outline: none;
+  padding: 0.25rem 0.5rem 0.5rem 0;
+}
+.search__input-container input::placeholder {
+  color: #a7a7a7;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  padding-left: 32px;
+}
+
+.search__input-container {
+  position: relative;
+}
+
+.search__input-icon {
+  position: absolute;
+  transform: translate(10px, 10px);
+}
+
+.search__input-text {
+  max-width: 350px;
+}
+
+.search__input-select {
+  min-width: 150px;
+}
+.search__line-button {
+  display: block;
+  height: 0.1rem;
+  width: 100%;
+  border-radius: 2px;
+  border: 1px solid white;
+  align-self: center;
+}
+.search__button {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+.search__buttons {
+  gap: 1rem;
+}
+
+.search__square-button {
+  display: block;
+  height: 8px;
+  width: 8px;
+  border: 2px solid white;
+  align-self: center;
+  border-radius: 2px;
+}
+
+.inactive-round-button > .search__square-button {
+  border: 0.1rem solid #a7a7a7;
+}
+
+.inactive-round-button > .search__line-button {
+  border: 1px solid #a7a7a7;
+  filter: drop-shadow(0px 2px 4px rgba(191, 196, 201, 0.2)) drop-shadow(0px 3px 4px rgba(191, 196, 201, 0.18))
+    drop-shadow(0px 1px 5px rgba(191, 196, 201, 0.24));
+}
+
+@media screen and (max-width: 575px) {
+  .search__inputs {
+    height: 32px;
+    display: flex;
+  }
+  .search__square-button {
+    height: 7px;
+    width: 7px;
+    border: 1.5px solid white;
+  }
+  .search__input-select {
+    min-width: 32px;
+    height: 32px;
+  }
+  .search__input-container {
+    max-width: 32px;
+  }
+  .search__input-icon {
+    position: absolute;
+    transform: translate(8px, 8px);
+  }
+}

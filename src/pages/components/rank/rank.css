@@ -1,0 +1,24 @@
+.rank-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.625rem;
+}
+
+.rank__gap {
+  gap: 1rem;
+}
+
+.rank__gap-small {
+  gap: 0.625rem;
+}
+
+@media screen and (max-width: 575px) {
+  .rank__wrapper-small {
+    height: 1rem;
+    gap: 0.5rem;
+  }
+  .rank__star__small {
+    width: 0.8rem;
+    height: 0.8rem;
+  }
+}
