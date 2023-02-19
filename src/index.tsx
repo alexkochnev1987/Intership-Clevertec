@@ -1,5 +1,5 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { BookPage } from './pages/book';
@@ -7,6 +7,7 @@ import { Layout } from './pages/layout/layout';
 import { LayoutMain } from './pages/layout-main/layout-main';
 import { MainPage } from './pages/main/main-page';
 import { Terms } from './pages/terms/terms';
+import { store } from './store';
 
 import './index.css';
 
@@ -16,7 +17,7 @@ if (!rootElement) throw new Error('Failed to find the root element');
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <HashRouter>
       <Routes>
         <Route path='/' element={<Layout />}>
@@ -32,5 +33,5 @@ root.render(
         </Route>
       </Routes>
     </HashRouter>
-  </React.StrictMode>
+  </Provider>
 );

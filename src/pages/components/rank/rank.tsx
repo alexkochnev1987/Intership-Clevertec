@@ -1,5 +1,3 @@
-import React from 'react';
-
 import star from '../../../assets/img/star.png';
 import starFill from '../../../assets/img/star-f.png';
 

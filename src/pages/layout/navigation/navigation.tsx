@@ -3,69 +3,70 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useClickOutside } from '../../../hooks/use-click-outside';
+import { useAppSelector } from '../../../store/store-hooks';
 import { OpenMenuIcon } from '../../components/open-menu-icon';
 import { BurgerContext } from '../layout';
 
 import './menu.css';
 
-const BookCategories = [
-  {
-    name: 'Бизнес книги',
-    count: 14,
-  },
-  {
-    name: 'Детективы',
-    count: 8,
-  },
-  {
-    name: 'Детские книги',
-    count: 10,
-  },
-  {
-    name: 'Зарубежная литература',
-    count: 2,
-  },
-  {
-    name: 'История',
-    count: 5,
-  },
-  {
-    name: 'Классическая литература',
-    count: 12,
-  },
-  {
-    name: 'Книги по психологии',
-    count: 11,
-  },
-  {
-    name: 'Компьютерная литература',
-    count: 54,
-  },
-  {
-    name: 'Культура и искусство',
-    count: 0,
-  },
-  {
-    name: 'Наука и образование',
-    count: 2,
-  },
-  {
-    name: 'Публицистическая литература',
-    count: 0,
-  },
-  {
-    name: 'Справочники',
-    count: 10,
-  },
-  {
-    name: 'Фантастика',
-    count: 12,
-  },
-  {
-    name: 'Юмористическая литература',
-    count: 10,
-  },
-];
+// const BookCategories = [
+//   {
+//     name: 'Бизнес книги',
+//     count: 14,
+//   },
+//   {
+//     name: 'Детективы',
+//     count: 8,
+//   },
+//   {
+//     name: 'Детские книги',
+//     count: 10,
+//   },
+//   {
+//     name: 'Зарубежная литература',
+//     count: 2,
+//   },
+//   {
+//     name: 'История',
+//     count: 5,
+//   },
+//   {
+//     name: 'Классическая литература',
+//     count: 12,
+//   },
+//   {
+//     name: 'Книги по психологии',
+//     count: 11,
+//   },
+//   {
+//     name: 'Компьютерная литература',
+//     count: 54,
+//   },
+//   {
+//     name: 'Культура и искусство',
+//     count: 0,
+//   },
+//   {
+//     name: 'Наука и образование',
+//     count: 2,
+//   },
+//   {
+//     name: 'Публицистическая литература',
+//     count: 0,
+//   },
+//   {
+//     name: 'Справочники',
+//     count: 10,
+//   },
+//   {
+//     name: 'Фантастика',
+//     count: 12,
+//   },
+//   {
+//     name: 'Юмористическая литература',
+//     count: 10,
+//   },
+// ];
 
 enum NavigationLinks {
   showcase = 'Витрина книг',
@@ -141,6 +142,8 @@ export const NavigationPage = () => {
   const [show, setShow] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const openNav = () => (isClicked ? setShow(!show) : setIsClicked(true));
+  const categories = useAppSelector((state) => state.books.categories);
+  const books = useAppSelector((state) => state.books.books);
 
   const closeNav = () => {
     setState(true);
@@ -148,6 +151,8 @@ export const NavigationPage = () => {
     setIsClicked(false);
   };
   const burgerMenu = useRef(null);
+
+  const countBooksWithCategory = (category: string) => books.filter((x) => x.categories.includes(category)).length;
 
   useClickOutside(burgerMenu, () => setState(true), close);
 
@@ -188,15 +193,15 @@ export const NavigationPage = () => {
                 </NavLink>
               </li>
               <ul>
-                {BookCategories.map((x, index) => (
+                {categories.map((x) => (
                   <li className='nav__books-categories' key={x.name}>
                     <NavLink
-                      to={`/books/${index}`}
+                      to={`/books/${x.path}`}
                       className={({ isActive }) => (isActive ? 'nav__link-active' : '')}
                       onClick={() => setState(true)}
                     >
                       <span className='nav__books-span'>{x.name}</span>
-                      <span className='inactive-text'>{x.count}</span>
+                      <span className='inactive-text'>{countBooksWithCategory(x.name)}</span>
                     </NavLink>
                   </li>
                 ))}

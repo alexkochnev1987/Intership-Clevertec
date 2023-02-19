@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import SwiperCore, { FreeMode, Navigation, Pagination, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import cover from '../../../assets/img/image.png';
+import { HOST } from '../../../store/book-slice';
+import { ImageBook } from '../../../store/description-slice';
 
 import './swiper.css';
 
@@ -21,7 +22,7 @@ const ThumbWrapper = styled.div`
   }
 `;
 
-export const SwiperSlider = ({ img }: { img: string[] }) => {
+export const SwiperSlider = ({ img }: { img: ImageBook[] }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
 
   return (
@@ -38,9 +39,9 @@ export const SwiperSlider = ({ img }: { img: string[] }) => {
         }}
         data-test-id='slide-big'
       >
-        {img.map((x, index) => (
-          <SwiperSlide key={`${x + index}`}>
-            <img src={cover} alt={x} />
+        {img.map((x) => (
+          <SwiperSlide key={`${x.url}`}>
+            <img src={`${HOST}${x.url}`} alt={x.url} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -55,9 +56,9 @@ export const SwiperSlider = ({ img }: { img: string[] }) => {
           modules={[FreeMode, Navigation, Thumbs]}
           className='mySwiper'
         >
-          {img.map((x, index) => (
-            <SwiperSlide key={`${x + index}`} data-test-id='slide-mini'>
-              <img src={cover} alt={x} />
+          {img.map((x) => (
+            <SwiperSlide key={`${x.url}`} data-test-id='slide-mini'>
+              <img src={`${HOST}${x.url}`} alt={x.url} />
             </SwiperSlide>
           ))}
         </Swiper>

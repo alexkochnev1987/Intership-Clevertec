@@ -189,6 +189,11 @@ p {
 }
 .hide__text-overflow{
   white-space: wrap;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 

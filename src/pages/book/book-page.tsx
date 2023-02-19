@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { fetchDescription } from '../../store/description-slice';
+import { useAppDispatch, useAppSelector } from '../../store/store-hooks';
 import { NavigationPage } from '../layout/navigation/navigation';
-import { books } from '../main/main-page';
 
 import { CardBookPage } from './card-book-page/card-book-page';
 
@@ -20,7 +22,13 @@ const Container = styled.div`
 
 export const BookPage = () => {
   const { category, bookId } = useParams();
-  const book = books.find((x) => x.bookId === bookId);
+  const dispatch = useAppDispatch();
+  const book = useAppSelector((state) => state.description.book);
+  const loading = useAppSelector((state) => state.description.loading);
+
+  useEffect(() => {
+    if (bookId) dispatch(fetchDescription(bookId));
+  }, [dispatch, bookId]);
 
   return (
     <section className='book-page'>
@@ -29,10 +37,10 @@ export const BookPage = () => {
       </Container>
       <section className='book__description'>
         <p className='body-small book__description-text'>
-          {category} / {book?.name}
+          {category} / {book?.categories[0]}
         </p>
       </section>
-      {book && <CardBookPage book={book} />}
+      {book && !loading && <CardBookPage book={book} />}
     </section>
   );
 };
