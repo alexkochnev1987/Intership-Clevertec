@@ -37,7 +37,7 @@ export const BookPage = () => {
       </Container>
       <section className='book__description'>
         <p className='body-small book__description-text'>
-          {category} / {book?.categories[0]}
+          {category} / {book?.title}
         </p>
       </section>
       {book && !loading && <CardBookPage book={book} />}

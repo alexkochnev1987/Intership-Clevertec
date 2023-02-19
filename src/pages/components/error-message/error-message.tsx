@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import warning from '../../../assets/img/warning-circle.png';
 
 const ErrorWrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   width: 100%;
