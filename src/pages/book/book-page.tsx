@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchDescription } from '../../store/description-slice';
@@ -25,6 +25,17 @@ export const BookPage = () => {
   const dispatch = useAppDispatch();
   const book = useAppSelector((state) => state.description.book);
   const loading = useAppSelector((state) => state.description.loading);
+  const categories = useAppSelector((state) => state.categories.categories);
+  const findCategoryName = () => {
+    if (category === 'all') return 'all';
+    if (category) {
+      const categoryName = categories.find((elem) => elem.path === category)?.name;
+
+      return categoryName ? categoryName : '';
+    }
+
+    return '';
+  };
 
   useEffect(() => {
     if (bookId) dispatch(fetchDescription(bookId));
@@ -37,7 +48,10 @@ export const BookPage = () => {
       </Container>
       <section className='book__description'>
         <p className='body-small book__description-text'>
-          {category} / {book?.title}
+          <NavLink to={`/books/${category}`} data-test-id='breadcrumbs-link'>
+            {findCategoryName()}
+          </NavLink>{' '}
+          / <span data-test-id='book-title'>{book?.title}</span>
         </p>
       </section>
       {book && !loading && <CardBookPage book={book} />}
