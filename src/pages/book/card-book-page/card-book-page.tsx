@@ -27,7 +27,7 @@ const DropDown = styled.div<{ open: boolean }>`
 `;
 
 export const CardBookPage = ({ book }: { book: BookDescription }) => {
-  const { rating, images, description, title, authors, publish, issueYear } = book;
+  const { rating, images, description, authors, publish, issueYear } = book;
   const [openComments, setOpenComments] = useState(false);
 
   return (
@@ -42,7 +42,9 @@ export const CardBookPage = ({ book }: { book: BookDescription }) => {
             </div>
           )}
         </div>
-        <h3>{title}</h3>
+        <h3>
+          <span data-test-id='book-title'>{book.title}</span>
+        </h3>
         <p className='h5 inactive-text card__page-h5'>{authors.join(', ')}</p>
         <button className='button-middle card__page__button' type='button'>
           Забронировать

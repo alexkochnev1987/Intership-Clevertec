@@ -139,8 +139,7 @@ export const Search = ({ setView, view, setSearch, setAsc }: SearchProps) => {
           </ButtonOpen>
           <Input
             open={open}
-            type='search'
-            className=''
+            type='text'
             placeholder={placeholder}
             data-test-id='input-search'
             onChange={(v) => setSearch(v.target.value)}

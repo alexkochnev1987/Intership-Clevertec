@@ -123,14 +123,14 @@ export const NavigationPage = () => {
           </li>
           <DropDown show={!show}>
             <ul className='nav__all-books'>
-              <li className='h5' data-test-id='burger-books'>
+              <li className='h5'>
                 <NavLink
                   to='/books/all'
                   className={({ isActive }) => (isActive ? 'nav__link-active' : '')}
                   onClick={() => setState(true)}
                   data-test-id='navigation-books'
                 >
-                  {NavigationLinks.allBooks}
+                  <span data-test-id='burger-books'>{NavigationLinks.allBooks}</span>
                 </NavLink>
               </li>
               <ul>
@@ -141,11 +141,15 @@ export const NavigationPage = () => {
                       className={({ isActive }) => (isActive ? 'nav__link-active' : '')}
                       onClick={() => setState(true)}
                     >
-                      <span className='nav__books-span' data-test-id={`navigation-${x.path}`}>
-                        {x.name}
+                      <span data-test-id={`burger-${x.path}`}>
+                        <span className='nav__books-span' data-test-id={`navigation-${x.path}`}>
+                          {x.name}
+                        </span>
                       </span>
-                      <span className='inactive-text' data-test-id={`navigation-book-count-for-${x.path}`}>
-                        {countBooksWithCategory(x.name)}
+                      <span data-test-id={`burger-book-count-for-${x.path}`}>
+                        <span className='inactive-text' data-test-id={`navigation-book-count-for-${x.path}`}>
+                          {countBooksWithCategory(x.name)}
+                        </span>
                       </span>
                     </NavLink>
                   </li>

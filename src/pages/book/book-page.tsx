@@ -27,7 +27,7 @@ export const BookPage = () => {
   const loading = useAppSelector((state) => state.description.loading);
   const categories = useAppSelector((state) => state.categories.categories);
   const findCategoryName = () => {
-    if (category === 'all') return 'all';
+    if (category === 'all') return 'Все книги';
     if (category) {
       const categoryName = categories.find((elem) => elem.path === category)?.name;
 
@@ -51,7 +51,7 @@ export const BookPage = () => {
           <NavLink to={`/books/${category}`} data-test-id='breadcrumbs-link'>
             {findCategoryName()}
           </NavLink>{' '}
-          / <span data-test-id='book-title'>{book?.title}</span>
+          / <span data-test-id='book-name'>{book?.title}</span>
         </p>
       </section>
       {book && !loading && <CardBookPage book={book} />}
