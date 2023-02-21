@@ -1,7 +1,6 @@
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { fetchBooks } from '../../store/book-slice';
 import { fetchCategories } from '../../store/categories-slice';
 import { useAppDispatch, useAppSelector } from '../../store/store-hooks';
 import { ErrorMessage } from '../components/error-message/error-message';
@@ -29,7 +28,6 @@ export const Layout = () => {
 
   useEffect(() => {
     dispatch(fetchCategories());
-    dispatch(fetchBooks());
   }, [dispatch]);
 
   const valueProvider = useMemo(() => {
