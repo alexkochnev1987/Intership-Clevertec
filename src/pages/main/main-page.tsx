@@ -42,10 +42,12 @@ const Empty = styled.div`
 
 export const MainPage = () => {
   const [view, setView] = useState(true);
+  const [search, setSearch] = useState('');
+  const [asc, setAsc] = useState(true);
   const allBooks = useAppSelector((state) => state.books.books);
   const categories = useAppSelector((state) => state.categories.categories);
   const { category } = useParams();
-  const filter = (book: Book) => {
+  const filterCategory = (book: Book) => {
     if (category === 'all') {
       return true;
     }
@@ -58,11 +60,34 @@ export const MainPage = () => {
 
     return false;
   };
-  const filteredBooks = allBooks.filter(filter);
+
+  const filterSearch = (book: Book) => {
+    if (search) {
+      return book.title.toLowerCase().includes(search.toLowerCase().trim());
+    }
+
+    return true;
+  };
+
+  const sortBooks = (a: Book, b: Book) => {
+    if (a.rating) {
+      if (b.rating) {
+        return asc ? a.rating - b.rating : b.rating - a.rating;
+      }
+
+      return -1;
+    }
+
+    if (b.rating) return 1;
+
+    return 0;
+  };
+
+  const filteredBooks = allBooks.filter(filterCategory).filter(filterSearch).sort(sortBooks);
 
   return (
     <section className='main-page flex'>
-      <Search view={view} setView={setView} />
+      <Search view={view} setView={setView} setSearch={setSearch} setAsc={setAsc} />
       <div className={view ? 'main__cards' : 'main__cards-flex'}>
         {filteredBooks.length > 0 ? (
           filteredBooks.map((book) => (

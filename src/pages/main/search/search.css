@@ -97,7 +97,7 @@
     height: 32px;
   }
   .search__input-container {
-    max-width: 32px;
+    min-width: 32px;
   }
   .search__input-icon {
     position: absolute;
