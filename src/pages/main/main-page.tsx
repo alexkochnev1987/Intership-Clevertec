@@ -43,7 +43,7 @@ const Empty = styled.div`
 export const MainPage = () => {
   const [view, setView] = useState(true);
   const [search, setSearch] = useState('');
-  const [asc, setAsc] = useState(true);
+  const [asc, setAsc] = useState(false);
   const allBooks = useAppSelector((state) => state.books.books);
   const categories = useAppSelector((state) => state.categories.categories);
   const { category } = useParams();
@@ -70,17 +70,10 @@ export const MainPage = () => {
   };
 
   const sortBooks = (a: Book, b: Book) => {
-    if (a.rating) {
-      if (b.rating) {
-        return asc ? a.rating - b.rating : b.rating - a.rating;
-      }
+    const first = a.rating || 0;
+    const second = b.rating || 0;
 
-      return -1;
-    }
-
-    if (b.rating) return 1;
-
-    return 0;
+    return asc ? first - second : second - first;
   };
 
   const filteredBooks = allBooks.filter(filterCategory).filter(filterSearch).sort(sortBooks);
@@ -92,12 +85,16 @@ export const MainPage = () => {
         {filteredBooks.length > 0 ? (
           filteredBooks.map((book) => (
             <NavLink to={`${book.id}`} key={book.id} className='main-page-button'>
-              <CardBook book={book} view={view} />
+              <CardBook book={book} view={view} search={search} />
             </NavLink>
           ))
         ) : (
           <Empty>
-            <p>В этой категории книг еще нет</p>
+            {search ? (
+              <p data-test-id='search-result-not-found'>По запросу ничего не найдено</p>
+            ) : (
+              <p data-test-id='empty-category'>В этой категории книг ещё нет</p>
+            )}
           </Empty>
         )}
       </div>

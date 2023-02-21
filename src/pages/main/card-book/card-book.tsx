@@ -2,9 +2,11 @@ import iconCat from '../../../assets/img/icon_cat.png';
 import { Book, HOST } from '../../../store/book-slice';
 import { Rank } from '../../components/rank/rank';
 
+import { Highlighter } from './highlighter';
+
 import './card-book.css';
 
-export const CardBook = ({ book, view }: { book: Book; view: boolean }) => {
+export const CardBook = ({ book, view, search }: { book: Book; view: boolean; search: string }) => {
   const { rating, image } = book;
 
   return (
@@ -21,7 +23,7 @@ export const CardBook = ({ book, view }: { book: Book; view: boolean }) => {
       <div className={view ? 'card__rank__container' : 'card__rank__container-grid order2'}>
         <Rank rank={rating} smallGap={true} view={view} />
       </div>
-      <p className={view ? 'subtitle-small hide__text-overflow' : 'h5 card__content-text'}>{book.title}</p>
+      <Highlighter title={book.title} search={search} view={view} />
       <p
         className={
           view ? 'body-small inactive-text hide__text-overflow' : 'body-large inactive-text card__content-text'

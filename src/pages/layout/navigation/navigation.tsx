@@ -141,8 +141,12 @@ export const NavigationPage = () => {
                       className={({ isActive }) => (isActive ? 'nav__link-active' : '')}
                       onClick={() => setState(true)}
                     >
-                      <span className='nav__books-span'>{x.name}</span>
-                      <span className='inactive-text'>{countBooksWithCategory(x.name)}</span>
+                      <span className='nav__books-span' data-test-id={`navigation-${x.path}`}>
+                        {x.name}
+                      </span>
+                      <span className='inactive-text' data-test-id={`navigation-book-count-for-${x.path}`}>
+                        {countBooksWithCategory(x.name)}
+                      </span>
                     </NavLink>
                   </li>
                 ))}

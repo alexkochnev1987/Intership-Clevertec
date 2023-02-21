@@ -151,7 +151,11 @@ export const Search = ({ setView, view, setSearch, setAsc }: SearchProps) => {
           </ButtonClose>
         </SearchInput>
         <div className='search__input-container flex'>
-          <SortButton onClick={() => setAsc((v) => !v)} className='search__input search__input-select'>
+          <SortButton
+            onClick={() => setAsc((v) => !v)}
+            className='search__input search__input-select'
+            data-test-id='sort-rating-button'
+          >
             <SortIcon fill='#ff740f' />
             <span>{select}</span>
           </SortButton>
