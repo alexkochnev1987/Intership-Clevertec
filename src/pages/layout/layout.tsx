@@ -19,7 +19,7 @@ interface BurgerState {
 export const BurgerContext = createContext<BurgerState>({ close: true, setState: () => {} });
 
 export const Layout = () => {
-  const [burgerState, setBurgerState] = useState(true);
+  const [burgerState, setBurgerState] = useState(false);
   const loader = useAppSelector((state) => state.loader.loading);
   const errorCategories = useAppSelector((state) => state.categories.error);
   const errorBooks = useAppSelector((state) => state.books.error);
@@ -39,8 +39,15 @@ export const Layout = () => {
   }, [burgerState]);
 
   useEffect(() => {
-    if (errorBooks || errorCategories || errorDescription) setBurgerState(false);
-    setBurgerState(true);
+    const checkErrors = () => {
+      if (errorBooks || errorCategories || errorDescription) {
+        setBurgerState(false);
+      } else {
+        setBurgerState(true);
+      }
+    };
+
+    checkErrors();
   }, [errorBooks, errorCategories, errorDescription]);
 
   return (

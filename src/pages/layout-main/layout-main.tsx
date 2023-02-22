@@ -10,7 +10,7 @@ export const LayoutMain = () => {
 
   useEffect(() => {
     dispatch(fetchBooks());
-  }, [dispatch]);
+  });
 
   return (
     <div className='layout__main-container'>
