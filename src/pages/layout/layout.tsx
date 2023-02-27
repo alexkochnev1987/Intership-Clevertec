@@ -1,5 +1,6 @@
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import axios from 'axios';
 
 import { fetchCategories } from '../../store/categories-slice';
 import { useAppDispatch, useAppSelector } from '../../store/store-hooks';
@@ -10,11 +11,21 @@ import { Spinner } from '../components/spinner/spinner';
 import { Footer } from './footer/footer';
 
 import './layout.css';
+import { Login } from '../components/authorization/login/login';
 
 interface BurgerState {
   close: boolean;
   setState: (open: boolean) => void;
 }
+
+axios.interceptors.request.use((request) => {
+  if (request.url?.includes('api/books')) {
+    console.log('success');
+  }
+  console.log(request);
+
+  return request;
+});
 
 export const BurgerContext = createContext<BurgerState>({ close: true, setState: () => {} });
 
@@ -53,6 +64,7 @@ export const Layout = () => {
   return (
     <BurgerContext.Provider value={valueProvider}>
       <div className='container'>
+        <Login />
         {(errorCategories || errorBooks || errorDescription) && <ErrorMessage />}
         {loader && <Spinner />}
         <Header />

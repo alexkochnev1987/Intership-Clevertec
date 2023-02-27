@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 import { setLoadingFalse, setLoadingTrue } from './loader-slice';
 
@@ -64,18 +65,16 @@ export const fetchBooks = createAsyncThunk<Book[], undefined, { rejectValue: str
   'books/fetchBooks',
   async (_, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
-    const response = await fetch(`${HOST}/api/books`);
+    try {
+      const response = await axios.get<Book[]>(`${HOST}/api/books`);
+      const { data } = response;
 
-    if (!response.ok) {
-      dispatch(setLoadingFalse());
-
+      return data;
+    } catch (error) {
       return rejectWithValue('Server Error');
+    } finally {
+      dispatch(setLoadingFalse());
     }
-    const data: Book[] = await response.json();
-
-    dispatch(setLoadingFalse());
-
-    return data;
   }
 );
 
