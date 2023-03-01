@@ -11,31 +11,29 @@ import { Spinner } from '../components/spinner/spinner';
 import { Footer } from './footer/footer';
 
 import './layout.css';
-import { Login } from '../components/authorization/login/login';
 
 interface BurgerState {
   close: boolean;
   setState: (open: boolean) => void;
 }
 
-axios.interceptors.request.use((request) => {
-  if (request.url?.includes('api/books')) {
-    console.log('success');
-  }
-  console.log(request);
-
-  return request;
-});
-
 export const BurgerContext = createContext<BurgerState>({ close: true, setState: () => {} });
 
 export const Layout = () => {
   const [burgerState, setBurgerState] = useState(false);
+  const token = useAppSelector((state) => state.user.jwt);
   const loader = useAppSelector((state) => state.loader.loading);
   const errorCategories = useAppSelector((state) => state.categories.error);
   const errorBooks = useAppSelector((state) => state.books.error);
   const errorDescription = useAppSelector((state) => state.description.error);
   const dispatch = useAppDispatch();
+
+  axios.interceptors.request.use((config) => {
+    // eslint-disable-next-line no-param-reassign
+    config.headers.Authorization = token ? `Bearer ${token}` : '';
+
+    return config;
+  });
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -64,7 +62,6 @@ export const Layout = () => {
   return (
     <BurgerContext.Provider value={valueProvider}>
       <div className='container'>
-        <Login />
         {(errorCategories || errorBooks || errorDescription) && <ErrorMessage />}
         {loader && <Spinner />}
         <Header />

@@ -1,7 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-import { HOST } from './book-slice';
+import { categoriesRequestUrl, HOST } from '../constants/api';
+
 import { setLoadingFalse, setLoadingTrue } from './loader-slice';
 
 interface CategoriesReducerState {
@@ -26,18 +28,16 @@ export const fetchCategories = createAsyncThunk<Categories[], undefined, { rejec
   'books/fetchCategories',
   async (_, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
-    const response = await fetch(`${HOST}/api/categories`);
+    try {
+      const response = await axios.get<Categories[]>(HOST + categoriesRequestUrl);
+      const { data } = response;
 
-    if (!response.ok) {
-      dispatch(setLoadingFalse());
-
+      return data;
+    } catch (error) {
       return rejectWithValue('Server Error');
+    } finally {
+      dispatch(setLoadingFalse());
     }
-    const data: Categories[] = await response.json();
-
-    dispatch(setLoadingFalse());
-
-    return data;
   }
 );
 

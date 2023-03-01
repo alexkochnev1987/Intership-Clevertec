@@ -1,5 +1,5 @@
 import avatar from '../../../assets/img/avatar.png';
-import { HOST } from '../../../store/book-slice';
+import { HOST } from '../../../constants/api';
 import { Comment } from '../../../store/description-slice';
 import { Rank } from '../rank/rank';
 

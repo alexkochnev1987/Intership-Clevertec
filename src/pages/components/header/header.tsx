@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import userLogo from '../../../assets/img/avatar.png';
 import logo1 from '../../../assets/img/logo.png';
+import { useAppSelector } from '../../../store/store-hooks';
 import { BurgerContext } from '../../layout/layout';
 
 import { BurgerButton } from './burger-button';
@@ -10,8 +11,8 @@ import { BurgerButton } from './burger-button';
 import './header.css';
 
 export const Header = () => {
-  const userName = 'Вася';
   const navigate = useNavigate();
+  const user = useAppSelector((state) => state.user.user);
   const { close, setState } = useContext(BurgerContext);
 
   const handler = () => {
@@ -33,7 +34,7 @@ export const Header = () => {
         <h3 className='h3 header__name'>Библиотека</h3>
 
         <div className='header__user'>
-          <p className='header__greet subtitle-small'>Привет, {userName}!</p>
+          <p className='header__greet subtitle-small'>Привет, {user?.firstName}!</p>
           <img src={userLogo} alt='user-logo' />
         </div>
       </div>

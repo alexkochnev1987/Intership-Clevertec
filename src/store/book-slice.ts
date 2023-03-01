@@ -2,9 +2,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { setLoadingFalse, setLoadingTrue } from './loader-slice';
+import { booksRequestUrl, HOST } from '../constants/api';
 
-export const HOST = 'https://strapi.cleverland.by';
+import { setLoadingFalse, setLoadingTrue } from './loader-slice';
 
 export interface Book {
   issueYear: string;
@@ -42,31 +42,23 @@ export interface Book {
 }
 
 interface BookReducerState {
-  categories: Categories[];
   books: Book[];
   loading: boolean;
   error: string | undefined;
 }
 
 const initialState: BookReducerState = {
-  categories: [],
   books: [],
   loading: false,
   error: undefined,
 };
-
-interface Categories {
-  name: string;
-  path: string;
-  id: number;
-}
 
 export const fetchBooks = createAsyncThunk<Book[], undefined, { rejectValue: string }>(
   'books/fetchBooks',
   async (_, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.get<Book[]>(`${HOST}/api/books`);
+      const response = await axios.get<Book[]>(HOST + booksRequestUrl);
       const { data } = response;
 
       return data;

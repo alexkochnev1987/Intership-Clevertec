@@ -51,6 +51,7 @@
     "stylelint-prettier": "^2.0.0"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.11",
     "@reduxjs/toolkit": "^1.9.2",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
@@ -65,7 +66,8 @@
     "react-scripts": "^5.0.1",
     "styled-components": "^5.3.6",
     "swiper": "^9.0.3",
-    "web-vitals": "^3.0.3"
+    "web-vitals": "^3.0.3",
+    "yup": "^1.0.2"
   },
   "browserslist": {
     "production": [
