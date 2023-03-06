@@ -1,50 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import React, { useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
 
-import { ReactComponent as GoTo } from '../../../../assets/img/go-to.svg';
-import {
-  minLength,
-  nameNumber,
-  onlyLatinLetters,
-  passwordNumber,
-  requiredField,
-  stepOneFields,
-  uppercaseLetter,
-} from '../../../../constants/authorisation-constants';
+import { stepOneFields, stepThreeFields, stepTwoFields } from '../../../../constants/authorisation-constants';
 import { NavigationRoutes } from '../../../../constants/routes';
+import { schemaStepOne, schemaStepThree, schemaStepTwo } from '../../../../constants/validation-schema';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
 import { useAppDispatch, useAppSelector } from '../../../../store/store-hooks';
 import { registerUser, RegistrationRequest } from '../../../../store/user-slice';
 import { Spinner } from '../../spinner/spinner';
 import { RegistrationForm } from '../forms/registration-form';
-import {
-  ContentLink,
-  ContentQuestion,
-  FormTitle,
-  FormWrapper,
-  Input,
-  InputError,
-  InputsWrapper,
-  InputWrapper,
-  LoginWrapper,
-  MessageSubtitle,
-  PasswordButton,
-  SubmitButton,
-  SubmitContentWrapper,
-  SubmitWrapper,
-} from '../login/styled';
-
-const schema = yup.object().shape({
-  lastName: yup.string().required(),
-  firstName: yup.string().required(),
-  email: yup.string().email().required(),
-  username: yup.string().required('field is required'),
-  password: yup.string().required('field is required'),
-  phone: yup.string().required(),
-});
+import { FormTitle, FormWrapper, LoginWrapper, MessageSubtitle } from '../login/styled';
 
 export const Registration = () => {
   const [step, setStep] = useState(1);
@@ -60,38 +25,56 @@ export const Registration = () => {
   const loader = useAppSelector((state) => state.loader.loading);
   const dispatch = useAppDispatch();
 
-  const schemaStepOne = yup.object().shape({
-    first: yup
-      .string()
-      .required(requiredField)
-      .matches(/[a-zA-Z]/g, { message: onlyLatinLetters })
-      .matches(/[0-9]/g, nameNumber),
-
-    second: yup
-      .string()
-      .min(8, minLength)
-      .matches(/[A-ZА-Я]/g, uppercaseLetter)
-      .matches(/\d/g, passwordNumber)
-      .required(requiredField),
-  });
   const onSubmitStepOne: SubmitHandler<{ first: string; second: string }> = (data, e) => {
     e?.preventDefault();
+    setRegistrationData((s) => ({ ...s, firstName: data.first, lastName: data.second }));
+    setStep((x) => x + 1);
+    // dispatch(registerUser(data));
+  };
+
+  const onSubmitStepTwo: SubmitHandler<{ first: string; second: string }> = (data, e) => {
+    e?.preventDefault();
     setRegistrationData((s) => ({ ...s, username: data.first, password: data.second }));
-    console.log(data);
+    setStep((x) => x + 1);
+    console.log(data, registrationData);
+
+    // dispatch(registerUser(data));
+  };
+
+  const onSubmitStepThree: SubmitHandler<{ first: string; second: string }> = (data, e) => {
+    e?.preventDefault();
+    setRegistrationData((s) => ({ ...s, phone: data.first, email: data.second }));
+    console.log(data, registrationData);
 
     // dispatch(registerUser(data));
   };
 
   return (
-    <LoginWrapper>
-      <FormWrapper>
-        <div>
-          <FormTitle>Регистрация</FormTitle>
-          <MessageSubtitle>{step} шаг из 3</MessageSubtitle>
-        </div>
-        <RegistrationForm onSubmit={onSubmitStepOne} schema={schemaStepOne} step={step} text={stepOneFields} />
-      </FormWrapper>
-    </LoginWrapper>
+    <React.Fragment>
+      <LoginWrapper>
+        <FormWrapper>
+          <div>
+            <FormTitle>Регистрация</FormTitle>
+            <MessageSubtitle>{step} шаг из 3</MessageSubtitle>
+          </div>
+          {step === 1 && (
+            <RegistrationForm onSubmit={onSubmitStepOne} schema={schemaStepOne} step={step} text={stepOneFields} />
+          )}
+          {step === 2 && (
+            <RegistrationForm onSubmit={onSubmitStepTwo} schema={schemaStepTwo} step={step} text={stepTwoFields} />
+          )}
+          {step === 3 && (
+            <RegistrationForm
+              onSubmit={onSubmitStepThree}
+              schema={schemaStepThree}
+              step={step}
+              text={stepThreeFields}
+            />
+          )}
+        </FormWrapper>
+      </LoginWrapper>
+      {loader && <Spinner />}
+    </React.Fragment>
   );
   //   return (
   //     <React.Fragment>
@@ -174,33 +157,33 @@ export const Registration = () => {
   //                 </InputWrapper>
   //               </React.Fragment>
   //             )}
-  //             <SubmitWrapper>
-  //               {/* {step === 3 ? ( */}
-  //               <SubmitButton type='submit' disabled={!isValid}>
-  //                 {ButtonText[step]}
-  //               </SubmitButton>
-  //               {/* ) : ( */}
-  //               <SubmitButton
-  //                 type='button'
-  //                 disabled={isInvalidFields()}
-  //                 onClick={() => {
-  //                   setStep((s) => s + 1);
-  //                 }}
-  //               >
-  //                 {ButtonText[step]}
-  //               </SubmitButton>
-  //               {/* )} */}
-  //               <SubmitContentWrapper>
-  //                 <ContentQuestion>Есть учётная запись?</ContentQuestion>
+  //   <SubmitWrapper>
+  //     {/* {step === 3 ? ( */}
+  //     <SubmitButton type='submit' disabled={!isValid}>
+  //       {ButtonText[step]}
+  //     </SubmitButton>
+  //     {/* ) : ( */}
+  //     <SubmitButton
+  //       type='button'
+  //       disabled={isInvalidFields()}
+  //       onClick={() => {
+  //         setStep((s) => s + 1);
+  //       }}
+  //     >
+  //       {ButtonText[step]}
+  //     </SubmitButton>
+  //     {/* )} */}
+  //     <SubmitContentWrapper>
+  //       <ContentQuestion>Есть учётная запись?</ContentQuestion>
 
-  //                 <Link to={NavigationRoutes.login}>
-  //                   <ContentLink>
-  //                     Войти
-  //                     <GoTo width='18px' height='12px' />
-  //                   </ContentLink>
-  //                 </Link>
-  //               </SubmitContentWrapper>
-  //             </SubmitWrapper>
+  //       <Link to={NavigationRoutes.login}>
+  //         <ContentLink>
+  //           Войти
+  //           <GoTo width='18px' height='12px' />
+  //         </ContentLink>
+  //       </Link>
+  //     </SubmitContentWrapper>
+  //   </SubmitWrapper>
   //           </FormWrapper>
   //         </form>
   //       </LoginWrapper>

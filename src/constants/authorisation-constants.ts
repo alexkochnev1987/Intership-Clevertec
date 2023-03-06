@@ -4,6 +4,7 @@ export const nameNumber = 'цифры';
 export const minLength = 'не менее 8 символов';
 export const uppercaseLetter = 'с заглавной буквой';
 export const passwordNumber = ' и цифрой';
+export const emailError = 'Введите корректный e-mail';
 
 export interface FormFieldsSchema {
   first: string;
@@ -18,6 +19,28 @@ export const stepOneFields: InputFieldsText = {
   second: {
     placeHolder: 'Пароль',
     fieldMessage: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
+  },
+};
+
+export const stepTwoFields: InputFieldsText = {
+  first: {
+    placeHolder: 'Имя',
+    fieldMessage: '',
+  },
+  second: {
+    placeHolder: 'Фамилия',
+    fieldMessage: '',
+  },
+};
+
+export const stepThreeFields: InputFieldsText = {
+  first: {
+    placeHolder: 'Номер телефона',
+    fieldMessage: 'В формате +375 (xx) xxx-xx-xx',
+  },
+  second: {
+    placeHolder: 'E-mail',
+    fieldMessage: 'Введите корректный e-mail',
   },
 };
 
