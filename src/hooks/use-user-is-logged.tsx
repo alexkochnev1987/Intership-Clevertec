@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch } from '../store/store-hooks';
+import { useAppDispatch, useAppSelector } from '../store/store-hooks';
 import { setUser } from '../store/user-slice';
 
 export const useUserIsLogged = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
+  const userName = useAppSelector((state) => state.user.user?.firstName);
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -15,10 +15,7 @@ export const useUserIsLogged = () => {
 
     if (token && userFromStorage) {
       dispatch(setUser({ jwt: token, user: JSON.parse(userFromStorage) }));
-      if (location.state) {
-        navigate(-1);
-      }
       navigate('/');
     }
-  }, [dispatch, location.state, navigate]);
+  }, [dispatch, navigate, userName]);
 };

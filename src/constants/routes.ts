@@ -7,4 +7,6 @@ export enum NavigationRoutes {
   all = '/all',
   category = '/:category',
   bookId = '/:bookId',
+  forgot = '/forgot-pass',
+  empty = '',
 }

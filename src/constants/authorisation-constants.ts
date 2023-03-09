@@ -1,3 +1,5 @@
+import { NavigationRoutes } from './routes';
+
 export const requiredField = 'Поле не может быть пустым';
 export const onlyLatinLetters = 'латинский алфавит';
 export const nameNumber = 'цифры';
@@ -5,6 +7,8 @@ export const minLength = 'не менее 8 символов';
 export const uppercaseLetter = 'с заглавной буквой';
 export const passwordNumber = ' и цифрой';
 export const emailError = 'Введите корректный e-mail';
+export const phoneError = 'В формате +375 (xx) xxx-xx-xx';
+export const secondPasswordError = 'Пароли не совпадают';
 
 export interface FormFieldsSchema {
   first: string;
@@ -60,3 +64,32 @@ export enum ButtonText {
   'Последний шаг',
   'зарегистрироваться',
 }
+
+export interface SubmitButtonForm {
+  button: string;
+  question: string;
+  link: NavigationRoutes;
+  linkName: string;
+  isValid: boolean;
+}
+
+export const LoginButtonValues = {
+  button: 'Вход',
+  question: 'Нет учетной записи?',
+  link: NavigationRoutes.registration,
+  linkName: 'Регистрация',
+};
+
+export const SendEmailButtonValues = {
+  button: 'восстановить',
+  question: 'Нет учетной записи?',
+  link: NavigationRoutes.registration,
+  linkName: 'Регистрация',
+};
+
+export const ResetPasswordButtonValues = {
+  button: 'сохранить изменения',
+  question: 'После сохранения войдите в библиотеку, используя новый пароль',
+  link: NavigationRoutes.empty,
+  linkName: '',
+};

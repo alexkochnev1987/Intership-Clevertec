@@ -24,6 +24,8 @@ import {
   SubmitWrapper,
 } from '../login/styled';
 
+import { PhoneMask } from './phone-mask';
+
 export const RegistrationForm = ({
   onSubmit,
   schema,
@@ -48,6 +50,7 @@ export const RegistrationForm = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors, isValid, touchedFields },
@@ -58,25 +61,37 @@ export const RegistrationForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <InputsWrapper>
-        <InputWrapper>
-          <Input
-            error={!!errors?.first}
-            placeholder={text.first.placeHolder}
-            {...register('first', {
-              onBlur: () => {
-                setFirstFocus(true);
-              },
-              onChange: () => {
-                setFirstFocus(false);
-              },
-            })}
-          />
-          {errors.first ? (
-            <HighlightError color={firstFocus} title={text.first.fieldMessage} search={errors.first.types} />
-          ) : (
-            <InputError color='#A7A7A7'>{text.first.fieldMessage}</InputError>
-          )}
-        </InputWrapper>
+        {step === 3 ? (
+          <InputWrapper>
+            <PhoneMask error={!!errors?.first} control={control} />
+            {errors.first ? (
+              <InputError>{errors.first.message}</InputError>
+            ) : (
+              <InputError color='#A7A7A7'>{text.first.fieldMessage}</InputError>
+            )}
+          </InputWrapper>
+        ) : (
+          <InputWrapper>
+            <Input
+              error={!!errors?.first}
+              placeholder={text.first.placeHolder}
+              {...register('first', {
+                onBlur: () => {
+                  setFirstFocus(true);
+                },
+                onChange: () => {
+                  setFirstFocus(false);
+                },
+              })}
+            />
+            {errors.first ? (
+              <HighlightError color={firstFocus} title={text.first.fieldMessage} search={errors.first.types} />
+            ) : (
+              //   <InputError>{errors.first.message}</InputError>
+              <InputError color='#A7A7A7'>{text.first.fieldMessage}</InputError>
+            )}
+          </InputWrapper>
+        )}
         {step === 1 ? (
           <InputWrapper>
             <PasswordButton type='button' onClick={() => setShowPassword((s) => !s)}>

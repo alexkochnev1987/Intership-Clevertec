@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as Eye } from '../../../../assets/img/eye.svg';
 import { ReactComponent as EyeClosed } from '../../../../assets/img/eye-closed.svg';
-import { ReactComponent as GoTo } from '../../../../assets/img/go-to.svg';
+import { LoginButtonValues } from '../../../../constants/authorisation-constants';
+import { NavigationRoutes } from '../../../../constants/routes';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
 import { useAppDispatch, useAppSelector } from '../../../../store/store-hooks';
 import { loginUser, resetError } from '../../../../store/user-slice';
@@ -12,8 +13,6 @@ import { Spinner } from '../../spinner/spinner';
 import { AuthMessage } from '../auth-message/auth-message';
 
 import {
-  ContentLink,
-  ContentQuestion,
   FormTitle,
   FormWrapper,
   Input,
@@ -23,10 +22,8 @@ import {
   LoginInputQuestion,
   LoginWrapper,
   PasswordButton,
-  SubmitButton,
-  SubmitContentWrapper,
-  SubmitWrapper,
 } from './styled';
+import { SubmitButtonForForm } from './submit-button';
 
 type Inputs = {
   name: string;
@@ -40,21 +37,12 @@ export const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    dispatch(
-      loginUser({
-        identifier: 'pihoozzz',
-        password: '5123260',
-      })
-    );
-
-    // dispatch(loginUser({ identifier: data.name, password: data.password }));
+    dispatch(loginUser({ identifier: data.name, password: data.password }));
   };
   const [showPassword, setShowPassword] = useState(false);
-
-  useUserIsLogged();
 
   const message = {
     title: 'Вход не выполнен',
@@ -62,6 +50,8 @@ export const Login = () => {
     button: 'повторить',
     callBack: () => dispatch(resetError()),
   };
+
+  useUserIsLogged();
 
   return (
     <React.Fragment>
@@ -98,26 +88,18 @@ export const Login = () => {
                   {error === '400' ? (
                     <React.Fragment>
                       <InputError>Неверный логин и пароль</InputError>
-                      <LoginInputQuestion>Восстановить?</LoginInputQuestion>
+                      <Link to={NavigationRoutes.forgot}>
+                        <LoginInputQuestion>Восстановить?</LoginInputQuestion>
+                      </Link>
                     </React.Fragment>
                   ) : (
-                    <LoginInputQuestion>Забыли логин и пароль?</LoginInputQuestion>
+                    <Link to={NavigationRoutes.forgot}>
+                      <LoginInputQuestion>Забыли логин и пароль?</LoginInputQuestion>
+                    </Link>
                   )}
                 </InputWrapper>
               </InputsWrapper>
-              <SubmitWrapper>
-                <SubmitButton type='submit'>Вход</SubmitButton>
-                <SubmitContentWrapper>
-                  <ContentQuestion>Есть учётная запись?</ContentQuestion>
-
-                  <Link to='/registration'>
-                    <ContentLink>
-                      Регистрация
-                      <GoTo width='18px' height='12px' />
-                    </ContentLink>
-                  </Link>
-                </SubmitContentWrapper>
-              </SubmitWrapper>
+              <SubmitButtonForForm {...LoginButtonValues} isValid={isValid} />
             </FormWrapper>
           </form>
         )}
