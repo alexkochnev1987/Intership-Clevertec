@@ -111,7 +111,6 @@ describe('authorization and registartion', () => {
       cy.get('[data-test-id=hint]:contains("Поле не может быть пустым")').should('not.exist');
     });
   });
-
   describe('registration', () => {
     beforeEach(() => {
       cy.visit('http://localhost:3000');
@@ -423,7 +422,7 @@ describe('authorization and registartion', () => {
     });
     it('forgot password validation', () => {
       cy.visit('http://localhost:3000/#/forgot-pass');
-      cy.get('[data-test-id=send-email-form] input[name=email]').focus().clear();
+      cy.get('[data-test-id=send-email-form] input[name=email]').focus();
       cy.get('[data-test-id=send-email-form] input[name=email]').blur();
       cy.get('[data-test-id=hint]:contains("Поле не может быть пустым")')
         .should('be.visible')

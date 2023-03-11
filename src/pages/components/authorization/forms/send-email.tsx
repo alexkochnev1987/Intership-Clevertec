@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,6 +9,7 @@ import { NavigationRoutes } from '../../../../constants/routes';
 import { schemaSendEmail } from '../../../../constants/validation-schema';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
 import { useAppSelector } from '../../../../store/store-hooks';
+import { HighlightError } from '../highlight-error/highlight-error';
 import { ContentLink, FormTitle, FormWrapper, Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
 import { SubmitButtonForForm } from '../login/submit-button';
 
@@ -18,8 +20,9 @@ export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ email: strin
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, dirtyFields },
   } = useForm<{ email: string }>({ resolver: yupResolver(schemaSendEmail), mode: 'all', criteriaMode: 'all' });
+  const [secondFocus, setSecondFocus] = useState(false);
 
   useUserIsLogged();
 
@@ -37,8 +40,30 @@ export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ email: strin
       <form onSubmit={handleSubmit(onSubmit)} data-test-id='send-email-form'>
         <InputsWrapper>
           <InputWrapper>
-            <Input error={!!errors?.email} placeholder={placeHolder} {...register('email')} />
-            {errors.email && <InputError data-test-id='hint'>{errors.email.message}</InputError>}
+            <Input
+              error={!!errors?.email}
+              placeholder={placeHolder}
+              {...register('email', {
+                onBlur: () => {
+                  setSecondFocus(true);
+                },
+                onChange: () => {
+                  setSecondFocus(false);
+                },
+              })}
+            />
+            {errors.email ? (
+              dirtyFields.email ? (
+                <HighlightError color={secondFocus} title={text} search={errors.email.types} />
+              ) : (
+                <InputError data-test-id='hint'>{errors.email.message}</InputError>
+              )
+            ) : (
+              <InputError color='#A7A7A7' data-test-id='hint'>
+                {text}
+              </InputError>
+            )}
+
             {error && <InputError data-test-id='hint'>error:{error}</InputError>}
             <InputError color='#A7A7A7' data-test-id='hint'>
               {text}
