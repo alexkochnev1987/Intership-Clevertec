@@ -8,7 +8,7 @@ import { ReactComponent as Checked } from '../../../../assets/img/checked.svg';
 import { ReactComponent as Eye } from '../../../../assets/img/eye.svg';
 import { ReactComponent as EyeClosed } from '../../../../assets/img/eye-closed.svg';
 import { ReactComponent as GoTo } from '../../../../assets/img/go-to.svg';
-import { ButtonText, FormFieldsSchema, InputFieldsText } from '../../../../constants/authorisation-constants';
+import { ButtonText, FormFieldsSchema, InputFieldsText } from '../../../../constants/authorization-constants';
 import { NavigationRoutes } from '../../../../constants/routes';
 import { HighlightError } from '../highlight-error/highlight-error';
 import {

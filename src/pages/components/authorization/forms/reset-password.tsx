@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { ReactComponent as Checked } from '../../../../assets/img/checked.svg';
 import { ReactComponent as Eye } from '../../../../assets/img/eye.svg';
 import { ReactComponent as EyeClosed } from '../../../../assets/img/eye-closed.svg';
-import { ResetPasswordButtonValues } from '../../../../constants/authorisation-constants';
+import { ResetPasswordButtonValues } from '../../../../constants/authorization-constants';
 import { schemaResetPassword } from '../../../../constants/validation-schema';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
 import { useAppSelector } from '../../../../store/store-hooks';

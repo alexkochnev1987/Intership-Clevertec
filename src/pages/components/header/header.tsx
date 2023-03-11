@@ -3,14 +3,18 @@ import { useNavigate } from 'react-router-dom';
 
 import userLogo from '../../../assets/img/avatar.png';
 import logo1 from '../../../assets/img/logo.png';
-import { useAppSelector } from '../../../store/store-hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/store-hooks';
+import { logoutUser } from '../../../store/user-slice';
 import { BurgerContext } from '../../layout/layout';
+import { Button } from '../../layout/navigation/styled';
 
 import { BurgerButton } from './burger-button';
+import { WrapperExit, WrapperUser } from './styled';
 
 import './header.css';
 
 export const Header = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user.user);
   const { close, setState } = useContext(BurgerContext);
@@ -32,11 +36,18 @@ export const Header = () => {
 
         <BurgerButton open={close} handler={handler} />
         <h3 className='h3 header__name'>Библиотека</h3>
-
-        <div className='header__user'>
-          <p className='header__greet subtitle-small'>Привет, {user?.firstName}!</p>
-          <img src={userLogo} alt='user-logo' />
-        </div>
+        <WrapperUser>
+          <div className='header__user'>
+            <p className='header__greet subtitle-small'>Привет, {user?.firstName}!</p>
+            <img src={userLogo} alt='user-logo' />
+          </div>
+          <WrapperExit>
+            <li className='nav__first-link'>Профиль</li>
+            <Button onClick={() => dispatch(logoutUser())}>
+              <li className='nav__first-link'>Выход</li>
+            </Button>
+          </WrapperExit>
+        </WrapperUser>
       </div>
     </div>
   );

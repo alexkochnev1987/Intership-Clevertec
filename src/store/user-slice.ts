@@ -35,7 +35,7 @@ export const loginUser = createAsyncThunk<UserResponse, LoginRequest, { rejectVa
   async (body, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.post<UserResponse>(HOST + loginUserRequestUrl, body);
+      const response = await axios.post(HOST + loginUserRequestUrl, body);
       const { data } = response;
 
       return data;
@@ -67,7 +67,7 @@ export const registerUser = createAsyncThunk<UserResponse, RegistrationRequest, 
   async (body, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.post<UserResponse>(HOST + registerUserRequestUrl, body);
+      const response = await axios.post(HOST + registerUserRequestUrl, body);
       const { data } = response;
 
       return data;
@@ -90,7 +90,7 @@ export const userSendEmail = createAsyncThunk<{ ok: boolean }, { email: string }
   async (body, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.post<{ ok: boolean }>(HOST + forgotPassword, body);
+      const response = await axios.post(HOST + forgotPassword, body);
       const { data } = response;
 
       return data;
@@ -119,7 +119,7 @@ export const userResetPassword = createAsyncThunk<UserResponse, ResetPasswordReq
   async (body, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.post<UserResponse>(HOST + resetPassword, body);
+      const response = await axios.post(HOST + resetPassword, body);
       const { data } = response;
 
       return data;
@@ -162,6 +162,8 @@ const userSlice = createSlice({
     logoutUser: (state) => {
       state.jwt = '';
       state.user = null;
+      localStorage.setItem('jwt', '');
+      localStorage.setItem('user', '');
     },
     setUser: (state, { payload }) => {
       state.jwt = payload.jwt;

@@ -2,7 +2,7 @@ import React from 'react';
 import { MultipleFieldErrors } from 'react-hook-form';
 import styled from 'styled-components';
 
-import { requiredField } from '../../../../constants/authorisation-constants';
+import { requiredField } from '../../../../constants/authorization-constants';
 
 const Paragraph = styled.p`
   font-style: normal;

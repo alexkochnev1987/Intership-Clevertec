@@ -10,7 +10,7 @@ import {
   requiredField,
   secondPasswordError,
   uppercaseLetter,
-} from './authorisation-constants';
+} from './authorization-constants';
 
 export const schemaStepOne = yup.object().shape({
   first: yup

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { stepOneFields, stepThreeFields, stepTwoFields } from '../../../../constants/authorisation-constants';
+import { stepOneFields, stepThreeFields, stepTwoFields } from '../../../../constants/authorization-constants';
 import { NavigationRoutes } from '../../../../constants/routes';
 import { schemaStepOne, schemaStepThree, schemaStepTwo } from '../../../../constants/validation-schema';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';

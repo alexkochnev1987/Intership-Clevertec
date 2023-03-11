@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import { ReactComponent as GoTo } from '../../../../assets/img/go-to.svg';
-import { SubmitButtonForm } from '../../../../constants/authorisation-constants';
+import { SubmitButtonForm } from '../../../../constants/authorization-constants';
 
 import { ContentLink, ContentQuestion, SubmitButton, SubmitContentWrapper, SubmitWrapper } from './styled';
 

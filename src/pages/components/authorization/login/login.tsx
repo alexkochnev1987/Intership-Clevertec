@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as Eye } from '../../../../assets/img/eye.svg';
 import { ReactComponent as EyeClosed } from '../../../../assets/img/eye-closed.svg';
-import { LoginButtonValues } from '../../../../constants/authorisation-constants';
+import { LoginButtonValues } from '../../../../constants/authorization-constants';
 import { NavigationRoutes } from '../../../../constants/routes';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
 import { useAppDispatch, useAppSelector } from '../../../../store/store-hooks';

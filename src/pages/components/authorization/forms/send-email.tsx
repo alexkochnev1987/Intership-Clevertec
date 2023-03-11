@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ReactComponent as GoTo } from '../../../../assets/img/go-to.svg';
-import { SendEmailButtonValues } from '../../../../constants/authorisation-constants';
+import { SendEmailButtonValues } from '../../../../constants/authorization-constants';
 import { NavigationRoutes } from '../../../../constants/routes';
 import { schemaSendEmail } from '../../../../constants/validation-schema';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
