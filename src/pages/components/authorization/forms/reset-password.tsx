@@ -4,26 +4,22 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ReactComponent as Checked } from '../../../../assets/img/checked.svg';
-import { ReactComponent as Eye } from '../../../../assets/img/eye.svg';
-import { ReactComponent as EyeClosed } from '../../../../assets/img/eye-closed.svg';
 import { ResetPasswordButtonValues } from '../../../../constants/authorization-constants';
+import { NavigationRoutes } from '../../../../constants/routes';
 import { schemaResetPassword } from '../../../../constants/validation-schema';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
 import { useAppSelector } from '../../../../store/store-hooks';
 import { AuthMessage } from '../auth-message/auth-message';
 import { HighlightError } from '../highlight-error/highlight-error';
-import {
-  FormTitle,
-  FormWrapper,
-  Input,
-  InputError,
-  InputsWrapper,
-  InputWrapper,
-  PasswordButton,
-} from '../login/styled';
+import { PasswordButtonComponent } from '../login/password-button';
+import { CheckPassword, FormTitle, FormWrapper, Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
 import { SubmitButtonForForm } from '../login/submit-button';
 
-export const ResetPassword = ({ onSubmit }: { onSubmit: SubmitHandler<{ first: string; second: string }> }) => {
+export const ResetPassword = ({
+  onSubmit,
+}: {
+  onSubmit: SubmitHandler<{ password: string; passwordConfirmation: string }>;
+}) => {
   const [showFirstPassword, setShowFirstPassword] = useState(false);
   const [showSecondPassword, setShowSecondPassword] = useState(false);
   const [firstFocus, setFirstFocus] = useState(false);
@@ -37,8 +33,8 @@ export const ResetPassword = ({ onSubmit }: { onSubmit: SubmitHandler<{ first: s
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, touchedFields },
-  } = useForm<{ first: string; second: string }>({
+    formState: { errors, isValid, touchedFields, dirtyFields },
+  } = useForm<{ password: string; passwordConfirmation: string }>({
     resolver: yupResolver(schemaResetPassword),
     mode: 'all',
     criteriaMode: 'all',
@@ -49,8 +45,8 @@ export const ResetPassword = ({ onSubmit }: { onSubmit: SubmitHandler<{ first: s
     button: 'вход',
     callBack: () => {
       localStorage.setItem('jwt', jwt);
-      localStorage.setItem('user', JSON.stringify(user));
-      navigate('/');
+      if (user) localStorage.setItem('user', JSON.stringify(user));
+      navigate(NavigationRoutes.login);
     },
   };
 
@@ -70,18 +66,24 @@ export const ResetPassword = ({ onSubmit }: { onSubmit: SubmitHandler<{ first: s
   ) : (
     <FormWrapper>
       <FormTitle>Восстановление пароля</FormTitle>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} data-test-id='reset-password-form'>
         <InputsWrapper>
           <InputWrapper>
-            <PasswordButton type='button' onClick={() => setShowFirstPassword((s) => !s)}>
-              {touchedFields.first && !errors?.first && <Checked width='9.5px' />}
-              {showFirstPassword ? <Eye width='24px' /> : <EyeClosed width='24px' />}
-            </PasswordButton>
+            {touchedFields.password && !errors?.password && (
+              <CheckPassword data-test-id='checkmark'>
+                <Checked width='9.5px' />
+              </CheckPassword>
+            )}
+            <PasswordButtonComponent
+              showEye={dirtyFields.password}
+              showPassword={showFirstPassword}
+              handler={() => setShowFirstPassword((s) => !s)}
+            />
             <Input
-              error={!!errors?.first}
+              error={!!errors?.password}
               placeholder='Новый пароль'
               type={showFirstPassword ? 'text' : 'password'}
-              {...register('first', {
+              {...register('password', {
                 onBlur: () => {
                   setFirstFocus(true);
                 },
@@ -90,23 +92,33 @@ export const ResetPassword = ({ onSubmit }: { onSubmit: SubmitHandler<{ first: s
                 },
               })}
             />
-            {errors.first ? (
-              <HighlightError color={firstFocus} title={text} search={errors.first.types} />
+            {errors.password ? (
+              dirtyFields.password ? (
+                <HighlightError color={firstFocus} title={text} search={errors.password.types} />
+              ) : (
+                <InputError data-test-id='hint'>{errors.password.message}</InputError>
+              )
             ) : (
-              <InputError color='#A7A7A7'>{text}</InputError>
+              <InputError color='#A7A7A7' data-test-id='hint'>
+                {text}
+              </InputError>
             )}
           </InputWrapper>
           <InputWrapper>
-            <PasswordButton type='button' onClick={() => setShowSecondPassword((s) => !s)}>
-              {showSecondPassword ? <Eye width='24px' /> : <EyeClosed width='24px' />}
-            </PasswordButton>
+            <PasswordButtonComponent
+              showEye={dirtyFields.passwordConfirmation}
+              showPassword={showSecondPassword}
+              handler={() => setShowSecondPassword((s) => !s)}
+            />
             <Input
-              error={!!errors?.second}
+              error={!!errors?.passwordConfirmation}
               placeholder='Повторите пароль'
               type={showSecondPassword ? 'text' : 'password'}
-              {...register('second')}
+              {...register('passwordConfirmation')}
             />
-            {errors.second && <InputError>{errors.second.message}</InputError>}
+            {errors.passwordConfirmation && (
+              <InputError data-test-id='hint'>{errors.passwordConfirmation.message}</InputError>
+            )}
           </InputWrapper>
         </InputsWrapper>
         <SubmitButtonForForm {...ResetPasswordButtonValues} isValid={isValid} />

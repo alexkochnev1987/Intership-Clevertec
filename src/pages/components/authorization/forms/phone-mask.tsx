@@ -1,12 +1,23 @@
 import { Control, Controller } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 
-import { FormFieldsSchema } from '../../../../constants/authorization-constants';
 import { Input } from '../login/styled';
 
-export const PhoneMask = ({ error, control }: { error: boolean; control: Control<FormFieldsSchema, unknown> }) => (
+export const PhoneMask = ({
+  error,
+  control,
+}: {
+  error: boolean;
+  control: Control<
+    {
+      phone: string;
+      email: string;
+    },
+    unknown
+  >;
+}) => (
   <Controller
-    name='first'
+    name='phone'
     control={control}
     render={(props) => (
       <InputMask
@@ -19,7 +30,7 @@ export const PhoneMask = ({ error, control }: { error: boolean; control: Control
           props.field.onChange(value);
         }}
       >
-        <Input type='tel' error={error} {...props} />
+        <Input type='tel' error={error} {...props} name='phone' />
       </InputMask>
     )}
   />

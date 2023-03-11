@@ -17,12 +17,12 @@ export const RecoverPassword = () => {
   const sendEmail = useAppSelector((state) => state.user.sendEmail);
   const dispatch = useAppDispatch();
   const code = searchParams.get('code');
-  const onSubmit: SubmitHandler<{ first: string }> = (data) => {
-    dispatch(userSendEmail({ email: data.first }));
+  const onSubmit: SubmitHandler<{ email: string }> = (data) => {
+    dispatch(userSendEmail(data));
   };
 
-  const resetPassword: SubmitHandler<{ first: string; second: string }> = (data) => {
-    if (code) dispatch(userResetPassword({ password: data.first, passwordConfirmation: data.second, code }));
+  const resetPassword: SubmitHandler<{ password: string; passwordConfirmation: string }> = (data) => {
+    if (code) dispatch(userResetPassword({ ...data, code }));
   };
   const message = {
     title: 'Письмо выслано',
@@ -33,7 +33,7 @@ export const RecoverPassword = () => {
 
   return (
     <React.Fragment>
-      <LoginWrapper>
+      <LoginWrapper data-test-id='auth'>
         {sendEmail ? (
           <AuthMessage {...message} />
         ) : code ? (

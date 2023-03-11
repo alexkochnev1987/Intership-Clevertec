@@ -11,7 +11,7 @@ import { useAppSelector } from '../../../../store/store-hooks';
 import { ContentLink, FormTitle, FormWrapper, Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
 import { SubmitButtonForForm } from '../login/submit-button';
 
-export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ first: string }> }) => {
+export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ email: string }> }) => {
   const error = useAppSelector((state) => state.user.error);
   const text = 'На это email  будет отправлено письмо с инструкциями по восстановлению пароля';
   const placeHolder = 'Email';
@@ -19,7 +19,7 @@ export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ first: strin
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<{ first: string }>({ resolver: yupResolver(schemaSendEmail), mode: 'onBlur' });
+  } = useForm<{ email: string }>({ resolver: yupResolver(schemaSendEmail), mode: 'all', criteriaMode: 'all' });
 
   useUserIsLogged();
 
@@ -34,13 +34,15 @@ export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ first: strin
         </ContentLink>
       </Link>
       <FormTitle>Восстановление пароля</FormTitle>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} data-test-id='send-email-form'>
         <InputsWrapper>
           <InputWrapper>
-            <Input error={!!errors?.first} placeholder={placeHolder} {...register('first')} />
-            {errors.first && <InputError>{errors.first.message}</InputError>}
-            {error && <InputError>{error}</InputError>}
-            <InputError color='#A7A7A7'>{text}</InputError>
+            <Input error={!!errors?.email} placeholder={placeHolder} {...register('email')} />
+            {errors.email && <InputError data-test-id='hint'>{errors.email.message}</InputError>}
+            {error && <InputError data-test-id='hint'>error:{error}</InputError>}
+            <InputError color='#A7A7A7' data-test-id='hint'>
+              {text}
+            </InputError>
           </InputWrapper>
         </InputsWrapper>
         <SubmitButtonForForm {...SendEmailButtonValues} isValid={isValid} />

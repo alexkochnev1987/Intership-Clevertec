@@ -33,6 +33,7 @@ export const Heading = styled.h3`
   }
 `;
 export const FormWrapper = styled.div`
+  min-width: 416px;
   padding: 50px 56px;
   display: flex;
   flex-direction: column;
@@ -40,12 +41,14 @@ export const FormWrapper = styled.div`
   border-radius: 16px;
   gap: 32px;
   @media screen and (max-width: 575px) {
+    min-width: 280px;
     max-width: 288px;
     padding: 24px 16px;
   }
 `;
 
 export const FormTitle = styled.p`
+  color: #363636;
   align-self: center;
   font-weight: 700;
   font-size: 24px;
@@ -72,19 +75,22 @@ export const InputWrapper = styled.div`
   position: relative;
 `;
 export const InputError = styled.p`
+  max-width: 400px;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.2px;
-  color: ${(props) => props.color || '#F42C4F'};
+  color: ${(props) => props.color || 'rgb(244, 44, 79)'};
   mix-blend-mode: normal;
 `;
 
 export const Input = styled.input<{ error: boolean }>`
+  box-sizing: border-box;
   height: 56px;
   display: block;
   width: 100%;
+  max-width: 528px;
   background: #f9f9fa;
   border-radius: 4px;
   padding: 12px;
@@ -110,6 +116,7 @@ export const SubmitWrapper = styled.div`
   gap: 16px;
 `;
 export const SubmitContentWrapper = styled.div`
+  max-width: 416px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -132,16 +139,20 @@ export const PasswordButton = styled.button`
   position: absolute;
   right: 10px;
   top: 15px;
-  /* transform: translate(590%, 170%); */
   border: none;
   background: none;
   cursor: pointer;
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  align-items: center;
+`;
+
+export const CheckPassword = styled.span`
+  position: absolute;
+  right: 40px;
+  top: 23px;
+  border: none;
+  background: none;
 `;
 export const ContentLink = styled.span`
+  max-width: 400px;
   display: flex;
   align-items: center;
   font-style: normal;
@@ -155,7 +166,6 @@ export const ContentLink = styled.span`
 
 export const SubmitButton = styled.button`
   width: 100%;
-  max-width: 416px;
   height: 52px;
   border: none;
   background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
@@ -167,6 +177,7 @@ export const SubmitButton = styled.button`
 `;
 
 export const MessageSubtitle = styled.p`
+  max-width: 416px;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;

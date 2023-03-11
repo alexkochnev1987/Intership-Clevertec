@@ -13,22 +13,22 @@ import {
 } from './authorization-constants';
 
 export const schemaStepOne = yup.object().shape({
-  first: yup
+  username: yup
     .string()
     .required(requiredField)
     .matches(/[a-zA-Z]/g, { message: onlyLatinLetters })
     .matches(/[0-9]/g, nameNumber),
 
-  second: yup
+  password: yup
     .string()
+    .required(requiredField)
     .min(8, minLength)
     .matches(/[A-ZА-Я]/g, uppercaseLetter)
-    .matches(/\d/g, passwordNumber)
-    .required(requiredField),
+    .matches(/\d/g, passwordNumber),
 });
 export const schemaStepTwo = yup.object().shape({
-  first: yup.string().required(requiredField),
-  second: yup.string().required(requiredField),
+  firstName: yup.string().required(requiredField),
+  lastName: yup.string().required(requiredField),
 });
 
 const checkOperator = (value: string) => {
@@ -44,28 +44,28 @@ const checkNumberLength = (value: string) => {
 };
 
 export const schemaStepThree = yup.object().shape({
-  first: yup
+  phone: yup
     .string()
     .required(requiredField)
     .test('isFullNumber', phoneError, checkNumberLength)
     .test('BelarusOperator', phoneError, checkOperator),
-  second: yup.string().email(emailError).required(requiredField),
+  email: yup.string().required(requiredField).email(emailError),
 });
 
 export const schemaSendEmail = yup.object().shape({
-  first: yup.string().email(emailError).required(requiredField),
+  email: yup.string().required(requiredField).email(emailError),
 });
 
 export const schemaResetPassword = yup.object().shape({
-  first: yup
+  password: yup
     .string()
+    .required(requiredField)
     .min(8, minLength)
     .matches(/[A-ZА-Я]/g, uppercaseLetter)
-    .matches(/\d/g, passwordNumber)
-    .required(requiredField),
+    .matches(/\d/g, passwordNumber),
 
-  second: yup
+  passwordConfirmation: yup
     .string()
-    .oneOf([yup.ref('first')], secondPasswordError)
-    .required(requiredField),
+    .required(requiredField)
+    .when('password', ([password], schema) => schema.matches(password, secondPasswordError)),
 });

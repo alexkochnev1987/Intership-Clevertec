@@ -9,7 +9,7 @@ export const PasswordButtonComponent = ({
   showEye,
 }: {
   showPassword: boolean;
-  showEye: boolean;
+  showEye: boolean | undefined;
   handler: () => void;
 }) => {
   const onShowPassword = () =>

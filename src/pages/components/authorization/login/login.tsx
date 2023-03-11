@@ -32,12 +32,11 @@ type Inputs = {
 export const Login = () => {
   const loader = useAppSelector((state) => state.loader.loading);
   const error = useAppSelector((state) => state.user.error);
-  const [showEye, setShowEye] = useState(false);
   const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, dirtyFields },
   } = useForm<Inputs>({ mode: 'all' });
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     dispatch(loginUser(data));
@@ -72,16 +71,12 @@ export const Login = () => {
                       required: requiredField,
                     })}
                   />
-                  {errors.identifier && (
-                    <InputError color='#F42C4F' data-test-id='hint'>
-                      {errors.identifier.message}
-                    </InputError>
-                  )}
+                  {errors.identifier && <InputError data-test-id='hint'>{errors.identifier.message}</InputError>}
                 </InputWrapper>
 
                 <InputWrapper>
                   <PasswordButtonComponent
-                    showEye={showEye}
+                    showEye={dirtyFields.password}
                     showPassword={showPassword}
                     handler={() => setShowPassword((s) => !s)}
                   />
@@ -91,16 +86,9 @@ export const Login = () => {
                     type={showPassword ? 'text' : 'password'}
                     {...register('password', {
                       required: requiredField,
-                      onChange: () => {
-                        setShowEye(true);
-                      },
                     })}
                   />
-                  {errors.password && (
-                    <InputError color='#F42C4F' data-test-id='hint'>
-                      {errors.password.message}
-                    </InputError>
-                  )}
+                  {errors.password && <InputError data-test-id='hint'>{errors.password.message}</InputError>}
                   {error === '400' ? (
                     <React.Fragment>
                       <InputError data-test-id='hint'>{AuthTextMessages.wrong}</InputError>

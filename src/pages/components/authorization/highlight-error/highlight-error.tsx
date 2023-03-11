@@ -2,9 +2,7 @@ import React from 'react';
 import { MultipleFieldErrors } from 'react-hook-form';
 import styled from 'styled-components';
 
-import { requiredField } from '../../../../constants/authorization-constants';
-
-const Paragraph = styled.p`
+const Paragraph = styled.span`
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -14,7 +12,7 @@ const Paragraph = styled.p`
   mix-blend-mode: normal;
 `;
 const Highlight = styled.span`
-  color: rgb(255, 82, 83);
+  color: rgb(244, 44, 79);
 `;
 
 export const HighlightError = ({
@@ -29,8 +27,8 @@ export const HighlightError = ({
   if (search) {
     if (search.required) {
       return (
-        <Paragraph color={color ? 'rgb(255, 82, 83)' : '#a7a7a7'}>
-          <Highlight>{requiredField}</Highlight>
+        <Paragraph color={color ? 'rgb(244, 44, 79)' : '#a7a7a7'} data-test-id='hint'>
+          <Highlight>{title}</Highlight>
         </Paragraph>
       );
     }
@@ -51,13 +49,13 @@ export const HighlightError = ({
     }
 
     return (
-      <Paragraph color={color ? 'rgb(255, 82, 83)' : '#a7a7a7'}>
+      <Paragraph color={color ? 'rgb(244, 44, 79)' : '#a7a7a7'} data-test-id='hint'>
         {titleArr.map((elem, index) => {
           if (errors.length > 0) {
             if (index === 0) {
               return (
                 <React.Fragment key={`${elem + index}`}>
-                  {elem}
+                  <span>{elem}</span>
                   <Highlight>{errors[0]}</Highlight>
                 </React.Fragment>
               );
@@ -67,7 +65,7 @@ export const HighlightError = ({
             if (index === 1) {
               return (
                 <React.Fragment key={`${elem + index}`}>
-                  {elem}
+                  <span>{elem}</span>
                   <Highlight>{errors[1]}</Highlight>
                 </React.Fragment>
               );
@@ -77,18 +75,22 @@ export const HighlightError = ({
             if (index === 2) {
               return (
                 <React.Fragment key={`${elem + index}`}>
-                  {elem}
+                  <span>{elem}</span>
                   <Highlight>{errors[2]}</Highlight>
                 </React.Fragment>
               );
             }
           }
 
-          return elem;
+          return <span key={elem}>{elem}</span>;
         })}
       </Paragraph>
     );
   }
 
-  return <Paragraph color={color ? 'rgb(255, 82, 83)' : '#a7a7a7'}>{title}</Paragraph>;
+  return (
+    <Paragraph color={color ? 'rgb(244, 44, 79)' : '#a7a7a7'} data-test-id='hint'>
+      {title}
+    </Paragraph>
+  );
 };

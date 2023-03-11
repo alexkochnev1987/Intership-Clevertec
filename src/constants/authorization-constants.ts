@@ -1,5 +1,8 @@
 import { NavigationRoutes } from './routes';
 
+export const companyName = 'Cleverland';
+export const registrationHeading = 'Регистрация';
+
 export enum AuthTextMessages {
   enter = 'Вход в личный кабинет',
   wrong = 'Неверный логин или пароль!',
@@ -16,19 +19,27 @@ export const emailError = 'Введите корректный e-mail';
 export const phoneError = 'В формате +375 (xx) xxx-xx-xx';
 export const secondPasswordError = 'Пароли не совпадают';
 
-export interface FormFieldsSchema {
-  first: string;
-  second: string;
+export interface IStepOne {
+  username: string;
+  password: string;
+}
+
+export enum FormFieldsSchema {
+  stepOne = 1,
+  stepTwo,
+  stepThree,
 }
 
 export const stepOneFields: InputFieldsText = {
   first: {
     placeHolder: 'Придумайте логин для входа',
     fieldMessage: 'Используйте для логина латинский алфавит и цифры',
+    nameInput: 'username',
   },
   second: {
     placeHolder: 'Пароль',
     fieldMessage: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
+    nameInput: 'password',
   },
 };
 
@@ -36,10 +47,12 @@ export const stepTwoFields: InputFieldsText = {
   first: {
     placeHolder: 'Имя',
     fieldMessage: '',
+    nameInput: 'firstName',
   },
   second: {
     placeHolder: 'Фамилия',
     fieldMessage: '',
+    nameInput: 'lastName',
   },
 };
 
@@ -47,10 +60,12 @@ export const stepThreeFields: InputFieldsText = {
   first: {
     placeHolder: 'Номер телефона',
     fieldMessage: 'В формате +375 (xx) xxx-xx-xx',
+    nameInput: 'phone',
   },
   second: {
     placeHolder: 'E-mail',
     fieldMessage: 'Введите корректный e-mail',
+    nameInput: 'email',
   },
 };
 
@@ -58,10 +73,12 @@ export interface InputFieldsText {
   first: {
     placeHolder: string;
     fieldMessage: string;
+    nameInput: string;
   };
   second: {
     placeHolder: string;
     fieldMessage: string;
+    nameInput: string;
   };
 }
 
@@ -86,6 +103,12 @@ export const LoginButtonValues = {
   linkName: 'Регистрация',
 };
 
+export const RegistrationText = {
+  question: 'Есть учётная запись?',
+  link: NavigationRoutes.login,
+  linkName: 'Войти',
+};
+
 export const SendEmailButtonValues = {
   button: 'восстановить',
   question: 'Нет учетной записи?',
@@ -98,4 +121,22 @@ export const ResetPasswordButtonValues = {
   question: 'После сохранения войдите в библиотеку, используя новый пароль',
   link: NavigationRoutes.empty,
   linkName: '',
+};
+
+export const successMessage = {
+  title: 'Регистрация успешна',
+  message: 'Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль',
+  button: 'вход',
+};
+
+export const errorMessage = {
+  title: 'Данные не сохранились',
+  message: 'Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.',
+  button: 'назад к регистрации',
+};
+
+export const errorMessageServer = {
+  title: 'Данные не сохранились',
+  message: 'Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз',
+  button: 'повторить',
 };

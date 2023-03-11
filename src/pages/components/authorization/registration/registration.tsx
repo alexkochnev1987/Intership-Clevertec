@@ -2,7 +2,16 @@ import React, { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { stepOneFields, stepThreeFields, stepTwoFields } from '../../../../constants/authorization-constants';
+import {
+  companyName,
+  errorMessage,
+  errorMessageServer,
+  registrationHeading,
+  stepOneFields,
+  stepThreeFields,
+  stepTwoFields,
+  successMessage,
+} from '../../../../constants/authorization-constants';
 import { NavigationRoutes } from '../../../../constants/routes';
 import { schemaStepOne, schemaStepThree, schemaStepTwo } from '../../../../constants/validation-schema';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
@@ -10,8 +19,10 @@ import { useAppDispatch, useAppSelector } from '../../../../store/store-hooks';
 import { registerUser, RegistrationRequest, resetError } from '../../../../store/user-slice';
 import { Spinner } from '../../spinner/spinner';
 import { AuthMessage } from '../auth-message/auth-message';
-import { RegistrationForm } from '../forms/registration-form';
-import { FormTitle, FormWrapper, LoginWrapper, MessageSubtitle } from '../login/styled';
+import { StepOneForm } from '../forms/step-one-form';
+import { StepThreeForm } from '../forms/step-three-form';
+import { StepTwoForm } from '../forms/step-two-form';
+import { FormTitle, FormWrapper, Heading, LoginWrapper, MessageSubtitle } from '../login/styled';
 
 export const Registration = () => {
   const registration = useAppSelector((state) => state.user.registration);
@@ -30,82 +41,66 @@ export const Registration = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmitStepTwo: SubmitHandler<{ first: string; second: string }> = (data, e) => {
+  const onSubmitStepOne: SubmitHandler<Partial<RegistrationRequest>> = (data, e) => {
     e?.preventDefault();
-    setRegistrationData((s) => ({ ...s, firstName: data.first, lastName: data.second }));
+    setRegistrationData((s) => ({ ...s, ...data }));
+    setStep((x) => x + 1);
+  };
+  const onSubmitStepTwo: SubmitHandler<Partial<RegistrationRequest>> = (data, e) => {
+    e?.preventDefault();
+    setRegistrationData((s) => ({ ...s, ...data }));
     setStep((x) => x + 1);
   };
 
-  const onSubmitStepOne: SubmitHandler<{ first: string; second: string }> = (data, e) => {
+  const onSubmitStepThree: SubmitHandler<Partial<RegistrationRequest>> = (data, e) => {
     e?.preventDefault();
-    setRegistrationData((s) => ({ ...s, username: data.first, password: data.second }));
-    setStep((x) => x + 1);
-  };
-
-  const onSubmitStepThree: SubmitHandler<{ first: string; second: string }> = (data, e) => {
-    e?.preventDefault();
-    setRegistrationData((s) => ({ ...s, phone: data.first, email: data.second }));
+    setRegistrationData((s) => ({ ...s, ...data }));
     dispatch(registerUser(registrationData));
   };
 
-  const message = {
-    title: 'Регистрация успешна',
-    message: 'Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль',
-    button: 'вход',
-    callBack: () => navigate(NavigationRoutes.login),
-  };
-
-  const errorMessage = {
-    title: 'Данные не сохранились',
-    message:
-      'Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.',
-    button: 'назад к регистрации',
-    callBack: () => {
-      setStep(1);
-      dispatch(resetError());
-    },
-  };
-
-  const errorMessageServer = {
-    title: 'Данные не сохранились',
-    message: 'Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз',
-    button: 'повторить',
-    callBack: () => {
-      dispatch(registerUser(registrationData));
-    },
-  };
-
   const checkErrorType = (errorType: string) =>
-    errorType === '400' ? <AuthMessage {...errorMessage} /> : <AuthMessage {...errorMessageServer} />;
+    errorType === '400' ? (
+      <AuthMessage
+        {...errorMessage}
+        callBack={() => {
+          setStep(1);
+          dispatch(resetError());
+        }}
+      />
+    ) : (
+      <AuthMessage
+        {...errorMessageServer}
+        callBack={() => {
+          dispatch(registerUser(registrationData));
+        }}
+      />
+    );
 
   useUserIsLogged();
 
   return (
     <React.Fragment>
       <LoginWrapper data-test-id='auth'>
+        <Heading>{companyName}</Heading>
         {registration ? (
-          <AuthMessage {...message} />
+          <AuthMessage {...successMessage} callBack={() => navigate(NavigationRoutes.login)} />
         ) : error ? (
           checkErrorType(error)
         ) : (
           <FormWrapper>
             <div>
-              <FormTitle>Регистрация</FormTitle>
+              <FormTitle>{registrationHeading}</FormTitle>
               <MessageSubtitle>{step} шаг из 3</MessageSubtitle>
             </div>
             {step === 1 && (
-              <RegistrationForm onSubmit={onSubmitStepOne} schema={schemaStepOne} step={step} text={stepOneFields} />
+              <StepOneForm onSubmit={onSubmitStepOne} schema={schemaStepOne} step={step} text={stepOneFields} />
             )}
             {step === 2 && (
-              <RegistrationForm onSubmit={onSubmitStepTwo} schema={schemaStepTwo} step={step} text={stepTwoFields} />
+              <StepTwoForm onSubmit={onSubmitStepTwo} schema={schemaStepTwo} step={step} text={stepTwoFields} />
             )}
+
             {step === 3 && (
-              <RegistrationForm
-                onSubmit={onSubmitStepThree}
-                schema={schemaStepThree}
-                step={step}
-                text={stepThreeFields}
-              />
+              <StepThreeForm onSubmit={onSubmitStepThree} schema={schemaStepThree} step={step} text={stepThreeFields} />
             )}
           </FormWrapper>
         )}
