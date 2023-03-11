@@ -2,7 +2,7 @@ export enum NavigationRoutes {
   books = '/books',
   registration = '/registration',
   terms = '/terms',
-  login = '/login',
+  login = '/auth',
   contract = '/contract',
   all = '/all',
   category = '/:category',

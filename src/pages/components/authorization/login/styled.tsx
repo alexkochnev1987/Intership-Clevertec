@@ -1,15 +1,36 @@
 import styled from 'styled-components';
 
 export const LoginWrapper = styled.div`
+  padding: 16px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+  gap: 46px;
+  @media screen and (max-width: 575px) {
+    gap: 8px;
+  }
+`;
+
+export const Heading = styled.h3`
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0.1px;
+  color: #ffffff;
+  text-align: center;
+  @media screen and (max-width: 575px) {
+    font-size: 18px;
+    line-height: 28px;
+  }
 `;
 export const FormWrapper = styled.div`
   padding: 50px 56px;
@@ -18,6 +39,10 @@ export const FormWrapper = styled.div`
   background: #ffffff;
   border-radius: 16px;
   gap: 32px;
+  @media screen and (max-width: 575px) {
+    max-width: 288px;
+    padding: 24px 16px;
+  }
 `;
 
 export const FormTitle = styled.p`
@@ -88,6 +113,10 @@ export const SubmitContentWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  @media screen and (max-width: 575px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const ContentQuestion = styled.p`

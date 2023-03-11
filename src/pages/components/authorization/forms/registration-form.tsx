@@ -87,7 +87,6 @@ export const RegistrationForm = ({
             {errors.first ? (
               <HighlightError color={firstFocus} title={text.first.fieldMessage} search={errors.first.types} />
             ) : (
-              //   <InputError>{errors.first.message}</InputError>
               <InputError color='#A7A7A7'>{text.first.fieldMessage}</InputError>
             )}
           </InputWrapper>

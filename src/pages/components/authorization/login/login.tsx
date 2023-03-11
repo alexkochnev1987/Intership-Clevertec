@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import { ReactComponent as Eye } from '../../../../assets/img/eye.svg';
-import { ReactComponent as EyeClosed } from '../../../../assets/img/eye-closed.svg';
-import { LoginButtonValues } from '../../../../constants/authorization-constants';
+import { AuthTextMessages, LoginButtonValues, requiredField } from '../../../../constants/authorization-constants';
 import { NavigationRoutes } from '../../../../constants/routes';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
 import { useAppDispatch, useAppSelector } from '../../../../store/store-hooks';
@@ -12,35 +10,37 @@ import { loginUser, resetError } from '../../../../store/user-slice';
 import { Spinner } from '../../spinner/spinner';
 import { AuthMessage } from '../auth-message/auth-message';
 
+import { PasswordButtonComponent } from './password-button';
 import {
   FormTitle,
   FormWrapper,
+  Heading,
   Input,
   InputError,
   InputsWrapper,
   InputWrapper,
   LoginInputQuestion,
   LoginWrapper,
-  PasswordButton,
 } from './styled';
 import { SubmitButtonForForm } from './submit-button';
 
 type Inputs = {
-  name: string;
+  identifier: string;
   password: string;
 };
 
 export const Login = () => {
   const loader = useAppSelector((state) => state.loader.loading);
   const error = useAppSelector((state) => state.user.error);
+  const [showEye, setShowEye] = useState(false);
   const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({ mode: 'all' });
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    dispatch(loginUser({ identifier: data.name, password: data.password }));
+    dispatch(loginUser(data));
   };
   const [showPassword, setShowPassword] = useState(false);
 
@@ -55,53 +55,69 @@ export const Login = () => {
 
   return (
     <React.Fragment>
-      <LoginWrapper>
+      <LoginWrapper data-test-id='auth'>
+        <Heading>Cleverland</Heading>
         {error && error !== '400' ? (
           <AuthMessage {...message} />
         ) : (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <FormWrapper>
-              <FormTitle>Вход в личный кабинет</FormTitle>
+          <FormWrapper>
+            <FormTitle>{AuthTextMessages.enter}</FormTitle>
+            <form onSubmit={handleSubmit(onSubmit)} data-test-id='auth-form'>
               <InputsWrapper>
                 <InputWrapper>
                   <Input
-                    error={!!errors?.name}
+                    error={!!errors?.identifier}
                     placeholder='Логин'
-                    {...register('name', {
-                      required: 'Поле не может быть пустым',
+                    {...register('identifier', {
+                      required: requiredField,
                     })}
                   />
-                  {errors.name && <InputError color='#F42C4F'>{errors.name.message}</InputError>}
+                  {errors.identifier && (
+                    <InputError color='#F42C4F' data-test-id='hint'>
+                      {errors.identifier.message}
+                    </InputError>
+                  )}
                 </InputWrapper>
 
                 <InputWrapper>
-                  <PasswordButton type='button' onClick={() => setShowPassword((s) => !s)}>
-                    {showPassword ? <Eye width='24px' /> : <EyeClosed width='24px' />}
-                  </PasswordButton>
+                  <PasswordButtonComponent
+                    showEye={showEye}
+                    showPassword={showPassword}
+                    handler={() => setShowPassword((s) => !s)}
+                  />
                   <Input
                     error={!!errors?.password}
                     placeholder='Пароль'
                     type={showPassword ? 'text' : 'password'}
-                    {...register('password', { required: 'Поле не может быть пустым' })}
+                    {...register('password', {
+                      required: requiredField,
+                      onChange: () => {
+                        setShowEye(true);
+                      },
+                    })}
                   />
-                  {errors.password && <InputError color='#F42C4F'>{errors.password.message}</InputError>}
+                  {errors.password && (
+                    <InputError color='#F42C4F' data-test-id='hint'>
+                      {errors.password.message}
+                    </InputError>
+                  )}
                   {error === '400' ? (
                     <React.Fragment>
-                      <InputError>Неверный логин и пароль</InputError>
+                      <InputError data-test-id='hint'>{AuthTextMessages.wrong}</InputError>
                       <Link to={NavigationRoutes.forgot}>
-                        <LoginInputQuestion>Восстановить?</LoginInputQuestion>
+                        <LoginInputQuestion>{AuthTextMessages.repair}</LoginInputQuestion>
                       </Link>
                     </React.Fragment>
                   ) : (
                     <Link to={NavigationRoutes.forgot}>
-                      <LoginInputQuestion>Забыли логин и пароль?</LoginInputQuestion>
+                      <LoginInputQuestion>{AuthTextMessages.forgot}</LoginInputQuestion>
                     </Link>
                   )}
                 </InputWrapper>
               </InputsWrapper>
               <SubmitButtonForForm {...LoginButtonValues} isValid={isValid} />
-            </FormWrapper>
-          </form>
+            </form>
+          </FormWrapper>
         )}
       </LoginWrapper>
       {loader && <Spinner />}

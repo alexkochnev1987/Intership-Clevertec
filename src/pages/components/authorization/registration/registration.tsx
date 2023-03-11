@@ -16,14 +16,14 @@ import { FormTitle, FormWrapper, LoginWrapper, MessageSubtitle } from '../login/
 export const Registration = () => {
   const registration = useAppSelector((state) => state.user.registration);
   const error = useAppSelector((state) => state.user.error);
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const [registrationData, setRegistrationData] = useState<RegistrationRequest>({
-    email: '',
     username: '',
     password: '',
     firstName: '',
     lastName: '',
     phone: '',
+    email: '',
   });
 
   const loader = useAppSelector((state) => state.loader.loading);
@@ -82,7 +82,7 @@ export const Registration = () => {
 
   return (
     <React.Fragment>
-      <LoginWrapper>
+      <LoginWrapper data-test-id='auth'>
         {registration ? (
           <AuthMessage {...message} />
         ) : error ? (

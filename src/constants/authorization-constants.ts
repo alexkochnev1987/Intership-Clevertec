@@ -1,5 +1,11 @@
 import { NavigationRoutes } from './routes';
 
+export enum AuthTextMessages {
+  enter = 'Вход в личный кабинет',
+  wrong = 'Неверный логин или пароль!',
+  repair = 'Восстановить?',
+  forgot = 'Забыли логин или пароль?',
+}
 export const requiredField = 'Поле не может быть пустым';
 export const onlyLatinLetters = 'латинский алфавит';
 export const nameNumber = 'цифры';

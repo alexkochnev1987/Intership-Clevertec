@@ -128,7 +128,7 @@ export const NavigationPage = () => {
           </li>
           <hr />
           <li className='nav__first-link'>Профиль</li>
-          <Button onClick={() => dispatch(logoutUser())}>
+          <Button onClick={() => dispatch(logoutUser())} data-test-id='exit-button'>
             <li className='nav__first-link'>Выход</li>
           </Button>
         </ul>
