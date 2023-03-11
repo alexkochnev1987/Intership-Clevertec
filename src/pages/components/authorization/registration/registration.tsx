@@ -3,14 +3,13 @@ import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import {
-  companyName,
   errorMessage,
   errorMessageServer,
-  registrationHeading,
   stepOneFields,
   stepThreeFields,
   stepTwoFields,
   successMessage,
+  TitleFormText,
 } from '../../../../constants/authorization-constants';
 import { NavigationRoutes } from '../../../../constants/routes';
 import { schemaStepOne, schemaStepThree, schemaStepTwo } from '../../../../constants/validation-schema';
@@ -81,7 +80,7 @@ export const Registration = () => {
   return (
     <React.Fragment>
       <LoginWrapper data-test-id='auth'>
-        <Heading>{companyName}</Heading>
+        <Heading>{TitleFormText.companyName}</Heading>
         {registration ? (
           <AuthMessage {...successMessage} callBack={() => navigate(NavigationRoutes.login)} />
         ) : error ? (
@@ -89,7 +88,7 @@ export const Registration = () => {
         ) : (
           <FormWrapper>
             <div>
-              <FormTitle>{registrationHeading}</FormTitle>
+              <FormTitle>{TitleFormText.registrationHeading}</FormTitle>
               <MessageSubtitle>{step} шаг из 3</MessageSubtitle>
             </div>
             {step === 1 && (

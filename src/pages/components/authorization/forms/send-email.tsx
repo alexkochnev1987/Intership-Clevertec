@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ReactComponent as GoTo } from '../../../../assets/img/go-to.svg';
-import { SendEmailButtonValues } from '../../../../constants/authorization-constants';
+import { AuthTextMessages, SendEmailButtonValues, TitleFormText } from '../../../../constants/authorization-constants';
 import { NavigationRoutes } from '../../../../constants/routes';
 import { schemaSendEmail } from '../../../../constants/validation-schema';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
@@ -30,10 +30,10 @@ export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ email: strin
           <span style={{ transform: 'rotate(180deg) translate(0, 3px)' }}>
             <GoTo width='18px' height='12px' stroke='#727272' />
           </span>
-          вход в личный кабинет
+          {AuthTextMessages.enter}
         </ContentLink>
       </Link>
-      <FormTitle>Восстановление пароля</FormTitle>
+      <FormTitle>{TitleFormText.repairPassword}</FormTitle>
       <form onSubmit={handleSubmit(onSubmit)} data-test-id='send-email-form'>
         <InputsWrapper>
           <InputWrapper>

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ReactComponent as Checked } from '../../../../assets/img/checked.svg';
-import { ResetPasswordButtonValues } from '../../../../constants/authorization-constants';
+import { ResetPasswordButtonValues, TitleFormText } from '../../../../constants/authorization-constants';
 import { NavigationRoutes } from '../../../../constants/routes';
 import { schemaResetPassword } from '../../../../constants/validation-schema';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
@@ -65,7 +65,7 @@ export const ResetPassword = ({
     checkMessage()
   ) : (
     <FormWrapper>
-      <FormTitle>Восстановление пароля</FormTitle>
+      <FormTitle>{TitleFormText.repairPassword}</FormTitle>
       <form onSubmit={handleSubmit(onSubmit)} data-test-id='reset-password-form'>
         <InputsWrapper>
           <InputWrapper>

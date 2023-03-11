@@ -1,7 +1,10 @@
 import { NavigationRoutes } from './routes';
 
-export const companyName = 'Cleverland';
-export const registrationHeading = 'Регистрация';
+export enum TitleFormText {
+  companyName = 'Cleverland',
+  registrationHeading = 'Регистрация',
+  repairPassword = 'Восстановление пароля',
+}
 
 export enum AuthTextMessages {
   enter = 'Вход в личный кабинет',
