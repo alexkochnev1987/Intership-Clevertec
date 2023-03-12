@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { ButtonText, InputFieldsText, RegistrationText } from '../../../../constants/authorization-constants';
 import { RegistrationRequest } from '../../../../store/user-slice';
 import { HighlightError } from '../highlight-error/highlight-error';
-import { Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
+import { ElementColors, Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
 import { SubmitButtonForForm } from '../login/submit-button';
 
 import { PhoneMask } from './phone-mask';
@@ -44,6 +44,10 @@ export const StepThreeForm = ({
   }>({ resolver: yupResolver(schema), mode: 'all', criteriaMode: 'all' });
   const [secondFocus, setSecondFocus] = useState(false);
 
+  enum FieldText {
+    emailName = 'email',
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} data-test-id='register-form'>
       <InputsWrapper>
@@ -52,7 +56,7 @@ export const StepThreeForm = ({
           {errors.phone ? (
             <InputError data-test-id='hint'>{errors.phone.message}</InputError>
           ) : (
-            <InputError color='#A7A7A7' data-test-id='hint'>
+            <InputError color={ElementColors.hintText} data-test-id='hint'>
               {text.first.fieldMessage}
             </InputError>
           )}
@@ -61,7 +65,7 @@ export const StepThreeForm = ({
           <Input
             error={!!errors?.email}
             placeholder={text.second.placeHolder}
-            {...register('email', {
+            {...register(FieldText.emailName, {
               onBlur: () => {
                 setSecondFocus(true);
               },
@@ -77,7 +81,7 @@ export const StepThreeForm = ({
               <InputError data-test-id='hint'>{errors.email.message}</InputError>
             )
           ) : (
-            <InputError color='#A7A7A7' data-test-id='hint'>
+            <InputError color={ElementColors.hintText} data-test-id='hint'>
               {text.second.fieldMessage}
             </InputError>
           )}

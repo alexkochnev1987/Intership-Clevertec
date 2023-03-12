@@ -12,8 +12,8 @@ export const AuthMessage = ({
   callBack: () => void;
 }) => (
   <FormWrapper data-test-id='status-block'>
-    <FormTitle>{title}</FormTitle>
-    <MessageSubtitle>{message}</MessageSubtitle>
+    <FormTitle center={true}>{title}</FormTitle>
+    <MessageSubtitle center={true}>{message}</MessageSubtitle>
     {button && (
       <SubmitButton
         onClick={() => {

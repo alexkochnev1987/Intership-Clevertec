@@ -7,7 +7,7 @@ import { ReactComponent as Checked } from '../../../../assets/img/checked.svg';
 import { ButtonText, InputFieldsText, IStepOne, RegistrationText } from '../../../../constants/authorization-constants';
 import { HighlightError } from '../highlight-error/highlight-error';
 import { PasswordButtonComponent } from '../login/password-button';
-import { CheckPassword, Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
+import { CheckPassword, ElementColors, Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
 import { SubmitButtonForForm } from '../login/submit-button';
 
 export const StepOneForm = ({
@@ -41,6 +41,13 @@ export const StepOneForm = ({
   const [firstFocus, setFirstFocus] = useState(false);
   const [secondFocus, setSecondFocus] = useState(false);
 
+  enum FieldText {
+    usernameName = 'username',
+    passwordName = 'password',
+    typeText = 'text',
+    typePassword = 'password',
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} data-test-id='register-form'>
       <InputsWrapper>
@@ -48,7 +55,7 @@ export const StepOneForm = ({
           <Input
             error={!!errors?.username}
             placeholder={text.first.placeHolder}
-            {...register('username', {
+            {...register(FieldText.usernameName, {
               onBlur: () => {
                 setFirstFocus(true);
               },
@@ -64,7 +71,7 @@ export const StepOneForm = ({
               <InputError data-test-id='hint'>{errors.username.message}</InputError>
             )
           ) : (
-            <InputError color='#A7A7A7' data-test-id='hint'>
+            <InputError color={ElementColors.hintText} data-test-id='hint'>
               {text.first.fieldMessage}
             </InputError>
           )}
@@ -83,8 +90,8 @@ export const StepOneForm = ({
           <Input
             error={!!errors?.password}
             placeholder={text.second.placeHolder}
-            type={showPassword ? 'text' : 'password'}
-            {...register('password', {
+            type={showPassword ? FieldText.typeText : FieldText.typePassword}
+            {...register(FieldText.passwordName, {
               onBlur: () => {
                 setSecondFocus(true);
               },

@@ -1,5 +1,18 @@
 import styled from 'styled-components';
 
+export const ElementColors = {
+  mainText: '#363636',
+  hintText: '#A7A7A7',
+  secondTextColor: '#727272',
+  errorHintText: 'rgb(244, 44, 79)',
+  formBackground: '#ffffff',
+  inputBackground: '#f9f9fa',
+  disabledButtonBackground: '#ebebeb',
+  buttonText: '#ffffff',
+  mainBackground: 'linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%)',
+  buttonBackground: 'linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%)',
+};
+
 export const LoginWrapper = styled.div`
   padding: 16px;
   position: fixed;
@@ -11,7 +24,7 @@ export const LoginWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+  background: ${ElementColors.mainBackground};
   gap: 46px;
   @media screen and (max-width: 575px) {
     gap: 8px;
@@ -25,7 +38,7 @@ export const Heading = styled.h3`
   font-size: 32px;
   line-height: 40px;
   letter-spacing: 0.1px;
-  color: #ffffff;
+  color: ${ElementColors.formBackground};
   text-align: center;
   @media screen and (max-width: 575px) {
     font-size: 18px;
@@ -33,23 +46,24 @@ export const Heading = styled.h3`
   }
 `;
 export const FormWrapper = styled.div`
-  min-width: 416px;
+  box-sizing: border-box;
+  max-width: 600px;
   padding: 50px 56px;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: ${ElementColors.formBackground};
   border-radius: 16px;
   gap: 32px;
   @media screen and (max-width: 575px) {
-    min-width: 280px;
     max-width: 288px;
     padding: 24px 16px;
+    gap: 24px;
   }
 `;
 
-export const FormTitle = styled.p`
-  color: #363636;
-  align-self: center;
+export const FormTitle = styled.p<{ center?: boolean }>`
+  color: ${ElementColors.mainText};
+  align-self: ${(props) => (props.center ? 'center' : 'flex-start')};
   font-weight: 700;
   font-size: 24px;
   line-height: 30px;
@@ -67,7 +81,7 @@ export const LoginInputQuestion = styled.p`
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.2px;
-  color: #a7a7a7;
+  color: ${ElementColors.hintText};
   mix-blend-mode: normal;
 `;
 
@@ -75,14 +89,17 @@ export const InputWrapper = styled.div`
   position: relative;
 `;
 export const InputError = styled.p`
-  max-width: 400px;
+  min-width: 400px;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.2px;
-  color: ${(props) => props.color || 'rgb(244, 44, 79)'};
+  color: ${(props) => props.color || ElementColors.errorHintText};
   mix-blend-mode: normal;
+  @media screen and (max-width: 575px) {
+    min-width: 240px;
+  }
 `;
 
 export const Input = styled.input<{ error: boolean }>`
@@ -91,19 +108,20 @@ export const Input = styled.input<{ error: boolean }>`
   display: block;
   width: 100%;
   max-width: 528px;
-  background: #f9f9fa;
+  background: ${ElementColors.inputBackground};
   border-radius: 4px;
   padding: 12px;
   border: none;
-  border-bottom: ${(props) => (props.error ? '1px solid #F42C4F' : '1px solid #bfc4c9')};
+  border-bottom: ${(props) =>
+    props.error ? `1px solid ${ElementColors.errorHintText}` : `1px solid ${ElementColors.secondTextColor}`};
   :focus {
     ::placeholder {
-      color: #363636;
+      color: ${ElementColors.mainText};
       transform: translate(0, -20px);
     }
   }
   ::placeholder {
-    color: #363636;
+    color: ${ElementColors.mainText};
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
@@ -132,7 +150,7 @@ export const ContentQuestion = styled.p`
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.1px;
-  color: #727272;
+  color: ${ElementColors.secondTextColor};
 `;
 
 export const PasswordButton = styled.button`
@@ -151,7 +169,8 @@ export const CheckPassword = styled.span`
   border: none;
   background: none;
 `;
-export const ContentLink = styled.span`
+export const ContentLink = styled.span<{ color?: string }>`
+  color: ${(props) => props.color || ElementColors.mainText};
   max-width: 400px;
   display: flex;
   align-items: center;
@@ -168,18 +187,25 @@ export const SubmitButton = styled.button`
   width: 100%;
   height: 52px;
   border: none;
-  background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+  color: ${ElementColors.buttonText};
+  text-transform: uppercase;
+  background: ${ElementColors.buttonBackground};
   border-radius: 30px;
   :disabled {
-    background: #ebebeb;
-    color: #ffffff;
+    background: ${ElementColors.disabledButtonBackground};
   }
 `;
 
-export const MessageSubtitle = styled.p`
+export const MessageSubtitle = styled.p<{ center?: boolean }>`
+  text-align: ${(props) => (props.center ? 'center' : 'start')};
   max-width: 416px;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #363636;
+  color: ${ElementColors.mainText};
+  @media screen and (max-width: 575px) {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+  }
 `;

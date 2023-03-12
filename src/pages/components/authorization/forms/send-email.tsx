@@ -10,7 +10,16 @@ import { schemaSendEmail } from '../../../../constants/validation-schema';
 import { useUserIsLogged } from '../../../../hooks/use-user-is-logged';
 import { useAppSelector } from '../../../../store/store-hooks';
 import { HighlightError } from '../highlight-error/highlight-error';
-import { ContentLink, FormTitle, FormWrapper, Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
+import {
+  ContentLink,
+  ElementColors,
+  FormTitle,
+  FormWrapper,
+  Input,
+  InputError,
+  InputsWrapper,
+  InputWrapper,
+} from '../login/styled';
 import { SubmitButtonForForm } from '../login/submit-button';
 
 export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ email: string }> }) => {
@@ -29,9 +38,9 @@ export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ email: strin
   return (
     <FormWrapper>
       <Link to={NavigationRoutes.login}>
-        <ContentLink style={{ color: '#727272' }}>
-          <span style={{ transform: 'rotate(180deg) translate(0, 3px)' }}>
-            <GoTo width='18px' height='12px' stroke='#727272' />
+        <ContentLink color={ElementColors.secondTextColor}>
+          <span className='rotate-arrow'>
+            <GoTo width='18px' height='12px' stroke={ElementColors.secondTextColor} />
           </span>
           {AuthTextMessages.enter}
         </ContentLink>
@@ -52,6 +61,7 @@ export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ email: strin
                 },
               })}
             />
+            {error && <InputError data-test-id='hint'>error:{error}</InputError>}
             {errors.email ? (
               dirtyFields.email ? (
                 <HighlightError color={secondFocus} title={text} search={errors.email.types} />
@@ -59,15 +69,10 @@ export const SendEmail = ({ onSubmit }: { onSubmit: SubmitHandler<{ email: strin
                 <InputError data-test-id='hint'>{errors.email.message}</InputError>
               )
             ) : (
-              <InputError color='#A7A7A7' data-test-id='hint'>
+              <InputError color={ElementColors.hintText} data-test-id='hint'>
                 {text}
               </InputError>
             )}
-
-            {error && <InputError data-test-id='hint'>error:{error}</InputError>}
-            <InputError color='#A7A7A7' data-test-id='hint'>
-              {text}
-            </InputError>
           </InputWrapper>
         </InputsWrapper>
         <SubmitButtonForForm {...SendEmailButtonValues} isValid={isValid} />

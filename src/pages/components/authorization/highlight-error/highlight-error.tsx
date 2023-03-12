@@ -2,6 +2,8 @@ import React from 'react';
 import { MultipleFieldErrors } from 'react-hook-form';
 import styled from 'styled-components';
 
+import { ElementColors } from '../login/styled';
+
 const Paragraph = styled.span`
   font-style: normal;
   font-weight: 500;
@@ -12,7 +14,7 @@ const Paragraph = styled.span`
   mix-blend-mode: normal;
 `;
 const Highlight = styled.span`
-  color: rgb(244, 44, 79);
+  color: ${ElementColors.errorHintText};
 `;
 
 export const HighlightError = ({
@@ -24,10 +26,12 @@ export const HighlightError = ({
   title: string;
   search: MultipleFieldErrors | undefined;
 }) => {
+  const checkColor = (colorName: boolean) => (colorName ? ElementColors.errorHintText : ElementColors.hintText);
+
   if (search) {
     if (search.required) {
       return (
-        <Paragraph color={color ? 'rgb(244, 44, 79)' : '#a7a7a7'} data-test-id='hint'>
+        <Paragraph color={checkColor(color)} data-test-id='hint'>
           <Highlight>{title}</Highlight>
         </Paragraph>
       );
@@ -49,7 +53,7 @@ export const HighlightError = ({
     }
 
     return (
-      <Paragraph color={color ? 'rgb(244, 44, 79)' : '#a7a7a7'} data-test-id='hint'>
+      <Paragraph color={checkColor(color)} data-test-id='hint'>
         {titleArr.map((elem, index) => {
           if (errors.length > 0) {
             if (index === 0) {
@@ -89,7 +93,7 @@ export const HighlightError = ({
   }
 
   return (
-    <Paragraph color={color ? 'rgb(244, 44, 79)' : '#a7a7a7'} data-test-id='hint'>
+    <Paragraph color={checkColor(color)} data-test-id='hint'>
       {title}
     </Paragraph>
   );

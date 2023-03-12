@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { booksRequestUrl, HOST } from '../constants/api';
+import { ErrorMessages } from '../constants/errors';
 
 import { setLoadingFalse, setLoadingTrue } from './loader-slice';
 
@@ -58,12 +59,11 @@ export const fetchBooks = createAsyncThunk<Book[], undefined, { rejectValue: str
   async (_, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.get<Book[]>(HOST + booksRequestUrl);
-      const { data } = response;
+      const { data } = await axios.get<Book[]>(HOST + booksRequestUrl);
 
       return data;
     } catch (error) {
-      return rejectWithValue('Server Error');
+      return rejectWithValue(ErrorMessages.server);
     } finally {
       dispatch(setLoadingFalse());
     }

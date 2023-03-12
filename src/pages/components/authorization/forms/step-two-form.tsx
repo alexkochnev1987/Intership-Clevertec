@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { ButtonText, InputFieldsText, RegistrationText } from '../../../../constants/authorization-constants';
 import { RegistrationRequest } from '../../../../store/user-slice';
 import { HighlightError } from '../highlight-error/highlight-error';
-import { Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
+import { ElementColors, Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
 import { SubmitButtonForForm } from '../login/submit-button';
 
 export const StepTwoForm = ({
@@ -42,6 +42,11 @@ export const StepTwoForm = ({
   const [firstFocus, setFirstFocus] = useState(false);
   const [secondFocus, setSecondFocus] = useState(false);
 
+  enum FieldText {
+    firstNameName = 'firstName',
+    lastNameName = 'lastName',
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} data-test-id='register-form'>
       <InputsWrapper>
@@ -49,7 +54,7 @@ export const StepTwoForm = ({
           <Input
             error={!!errors?.firstName}
             placeholder={text.first.placeHolder}
-            {...register('firstName', {
+            {...register(FieldText.firstNameName, {
               onBlur: () => {
                 setFirstFocus(true);
               },
@@ -65,7 +70,7 @@ export const StepTwoForm = ({
               <InputError data-test-id='hint'>{errors.firstName.message}</InputError>
             )
           ) : (
-            <InputError color='#A7A7A7' data-test-id='hint'>
+            <InputError color={ElementColors.hintText} data-test-id='hint'>
               {text.first.fieldMessage}
             </InputError>
           )}
@@ -74,7 +79,7 @@ export const StepTwoForm = ({
           <Input
             error={!!errors?.lastName}
             placeholder={text.second.placeHolder}
-            {...register('lastName', {
+            {...register(FieldText.lastNameName, {
               onBlur: () => {
                 setSecondFocus(true);
               },
@@ -90,7 +95,7 @@ export const StepTwoForm = ({
               <InputError data-test-id='hint'>{errors.lastName.message}</InputError>
             )
           ) : (
-            <InputError color='#A7A7A7' data-test-id='hint'>
+            <InputError color={ElementColors.hintText} data-test-id='hint'>
               {text.second.fieldMessage}
             </InputError>
           )}

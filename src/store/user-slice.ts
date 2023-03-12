@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { forgotPassword, HOST, loginUserRequestUrl, registerUserRequestUrl, resetPassword } from '../constants/api';
+import { ErrorMessages } from '../constants/errors';
 
 import { setLoadingFalse, setLoadingTrue } from './loader-slice';
 
@@ -35,18 +36,17 @@ export const loginUser = createAsyncThunk<UserResponse, LoginRequest, { rejectVa
   async (body, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.post(HOST + loginUserRequestUrl, body);
-      const { data } = response;
+      const { data } = await axios.post(HOST + loginUserRequestUrl, body);
 
       return data;
     } catch (e) {
       if (axios.isAxiosError(e)) {
         if (e.response?.status === 400) {
-          return rejectWithValue('400');
+          return rejectWithValue(ErrorMessages.user);
         }
       }
 
-      return rejectWithValue('Server Error');
+      return rejectWithValue(ErrorMessages.server);
     } finally {
       dispatch(setLoadingFalse());
     }
@@ -67,18 +67,17 @@ export const registerUser = createAsyncThunk<UserResponse, RegistrationRequest, 
   async (body, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.post(HOST + registerUserRequestUrl, body);
-      const { data } = response;
+      const { data } = await axios.post<UserResponse>(HOST + registerUserRequestUrl, body);
 
       return data;
     } catch (e) {
       if (axios.isAxiosError(e)) {
         if (e.response?.status === 400) {
-          return rejectWithValue('400');
+          return rejectWithValue(ErrorMessages.user);
         }
       }
 
-      return rejectWithValue('Server Error');
+      return rejectWithValue(ErrorMessages.server);
     } finally {
       dispatch(setLoadingFalse());
     }
@@ -90,8 +89,7 @@ export const userSendEmail = createAsyncThunk<{ ok: boolean }, { email: string }
   async (body, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.post(HOST + forgotPassword, body);
-      const { data } = response;
+      const { data } = await axios.post(HOST + forgotPassword, body);
 
       return data;
     } catch (e) {
@@ -101,7 +99,7 @@ export const userSendEmail = createAsyncThunk<{ ok: boolean }, { email: string }
         }
       }
 
-      return rejectWithValue('Server Error');
+      return rejectWithValue(ErrorMessages.server);
     } finally {
       dispatch(setLoadingFalse());
     }
@@ -119,8 +117,7 @@ export const userResetPassword = createAsyncThunk<UserResponse, ResetPasswordReq
   async (body, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.post(HOST + resetPassword, body);
-      const { data } = response;
+      const { data } = await axios.post(HOST + resetPassword, body);
 
       return data;
     } catch (e) {
@@ -130,7 +127,7 @@ export const userResetPassword = createAsyncThunk<UserResponse, ResetPasswordReq
         }
       }
 
-      return rejectWithValue('Server Error');
+      return rejectWithValue(ErrorMessages.server);
     } finally {
       dispatch(setLoadingFalse());
     }

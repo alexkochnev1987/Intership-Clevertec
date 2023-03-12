@@ -2,11 +2,12 @@ import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 
+import { TitleFormText } from '../../../../constants/authorization-constants';
 import { useAppDispatch, useAppSelector } from '../../../../store/store-hooks';
 import { userResetPassword, userSendEmail } from '../../../../store/user-slice';
 import { Spinner } from '../../spinner/spinner';
 import { AuthMessage } from '../auth-message/auth-message';
-import { LoginWrapper } from '../login/styled';
+import { Heading, LoginWrapper } from '../login/styled';
 
 import { ResetPassword } from './reset-password';
 import { SendEmail } from './send-email';
@@ -34,6 +35,7 @@ export const RecoverPassword = () => {
   return (
     <React.Fragment>
       <LoginWrapper data-test-id='auth'>
+        <Heading>{TitleFormText.companyName}</Heading>
         {sendEmail ? (
           <AuthMessage {...message} />
         ) : code ? (

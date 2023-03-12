@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { categoriesRequestUrl, HOST } from '../constants/api';
+import { ErrorMessages } from '../constants/errors';
 
 import { setLoadingFalse, setLoadingTrue } from './loader-slice';
 
@@ -29,12 +30,11 @@ export const fetchCategories = createAsyncThunk<Categories[], undefined, { rejec
   async (_, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
     try {
-      const response = await axios.get<Categories[]>(HOST + categoriesRequestUrl);
-      const { data } = response;
+      const { data } = await axios.get<Categories[]>(HOST + categoriesRequestUrl);
 
       return data;
     } catch (error) {
-      return rejectWithValue('Server Error');
+      return rejectWithValue(ErrorMessages.server);
     } finally {
       dispatch(setLoadingFalse());
     }

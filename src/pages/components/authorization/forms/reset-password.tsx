@@ -12,7 +12,16 @@ import { useAppSelector } from '../../../../store/store-hooks';
 import { AuthMessage } from '../auth-message/auth-message';
 import { HighlightError } from '../highlight-error/highlight-error';
 import { PasswordButtonComponent } from '../login/password-button';
-import { CheckPassword, FormTitle, FormWrapper, Input, InputError, InputsWrapper, InputWrapper } from '../login/styled';
+import {
+  CheckPassword,
+  ElementColors,
+  FormTitle,
+  FormWrapper,
+  Input,
+  InputError,
+  InputsWrapper,
+  InputWrapper,
+} from '../login/styled';
 import { SubmitButtonForForm } from '../login/submit-button';
 
 export const ResetPassword = ({
@@ -57,6 +66,15 @@ export const ResetPassword = ({
     callBack: () => {},
   };
 
+  enum FieldText {
+    passwordName = 'password',
+    passwordPlaceholder = 'Новый пароль',
+    typeText = 'text',
+    typePassword = 'password',
+    passwordConfirmationName = 'passwordConfirmation',
+    passwordConfirmationPlaceholder = 'Повторите пароль',
+  }
+
   const checkMessage = () => (error ? <AuthMessage {...errorMessage} /> : <AuthMessage {...successMessage} />);
 
   useUserIsLogged();
@@ -81,9 +99,9 @@ export const ResetPassword = ({
             />
             <Input
               error={!!errors?.password}
-              placeholder='Новый пароль'
-              type={showFirstPassword ? 'text' : 'password'}
-              {...register('password', {
+              placeholder={FieldText.passwordPlaceholder}
+              type={showFirstPassword ? FieldText.typeText : FieldText.typePassword}
+              {...register(FieldText.passwordName, {
                 onBlur: () => {
                   setFirstFocus(true);
                 },
@@ -99,7 +117,7 @@ export const ResetPassword = ({
                 <InputError data-test-id='hint'>{errors.password.message}</InputError>
               )
             ) : (
-              <InputError color='#A7A7A7' data-test-id='hint'>
+              <InputError color={ElementColors.hintText} data-test-id='hint'>
                 {text}
               </InputError>
             )}
@@ -112,9 +130,9 @@ export const ResetPassword = ({
             />
             <Input
               error={!!errors?.passwordConfirmation}
-              placeholder='Повторите пароль'
-              type={showSecondPassword ? 'text' : 'password'}
-              {...register('passwordConfirmation')}
+              placeholder={FieldText.passwordConfirmationPlaceholder}
+              type={showSecondPassword ? FieldText.typeText : FieldText.typePassword}
+              {...register(FieldText.passwordConfirmationName)}
             />
             {errors.passwordConfirmation && (
               <InputError data-test-id='hint'>{errors.passwordConfirmation.message}</InputError>

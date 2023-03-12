@@ -40,12 +40,7 @@ export const Registration = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmitStepOne: SubmitHandler<Partial<RegistrationRequest>> = (data, e) => {
-    e?.preventDefault();
-    setRegistrationData((s) => ({ ...s, ...data }));
-    setStep((x) => x + 1);
-  };
-  const onSubmitStepTwo: SubmitHandler<Partial<RegistrationRequest>> = (data, e) => {
+  const onSubmit: SubmitHandler<Partial<RegistrationRequest>> = (data, e) => {
     e?.preventDefault();
     setRegistrationData((s) => ({ ...s, ...data }));
     setStep((x) => x + 1);
@@ -57,8 +52,13 @@ export const Registration = () => {
     dispatch(registerUser(registrationData));
   };
 
+  enum FieldText {
+    errorType = '400',
+    subTitle = ' шаг из 3',
+  }
+
   const checkErrorType = (errorType: string) =>
-    errorType === '400' ? (
+    errorType === FieldText.errorType ? (
       <AuthMessage
         {...errorMessage}
         callBack={() => {
@@ -89,14 +89,13 @@ export const Registration = () => {
           <FormWrapper>
             <div>
               <FormTitle>{TitleFormText.registrationHeading}</FormTitle>
-              <MessageSubtitle>{step} шаг из 3</MessageSubtitle>
+              <MessageSubtitle>
+                {step}
+                {FieldText.subTitle}
+              </MessageSubtitle>
             </div>
-            {step === 1 && (
-              <StepOneForm onSubmit={onSubmitStepOne} schema={schemaStepOne} step={step} text={stepOneFields} />
-            )}
-            {step === 2 && (
-              <StepTwoForm onSubmit={onSubmitStepTwo} schema={schemaStepTwo} step={step} text={stepTwoFields} />
-            )}
+            {step === 1 && <StepOneForm onSubmit={onSubmit} schema={schemaStepOne} step={step} text={stepOneFields} />}
+            {step === 2 && <StepTwoForm onSubmit={onSubmit} schema={schemaStepTwo} step={step} text={stepTwoFields} />}
 
             {step === 3 && (
               <StepThreeForm onSubmit={onSubmitStepThree} schema={schemaStepThree} step={step} text={stepThreeFields} />

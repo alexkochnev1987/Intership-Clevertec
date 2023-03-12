@@ -12,19 +12,26 @@ import {
   uppercaseLetter,
 } from './authorization-constants';
 
+const RegularExpressions = {
+  onlyLatinLetters: /[a-zA-Z]/g,
+  containNumber: /\d/g,
+  containUppercaseLetter: /[A-ZА-Я]/g,
+  onlyNumbers: /\D/g,
+};
+
 export const schemaStepOne = yup.object().shape({
   username: yup
     .string()
     .required(requiredField)
-    .matches(/[a-zA-Z]/g, { message: onlyLatinLetters })
-    .matches(/[0-9]/g, nameNumber),
+    .matches(RegularExpressions.onlyLatinLetters, { message: onlyLatinLetters })
+    .matches(RegularExpressions.containNumber, nameNumber),
 
   password: yup
     .string()
     .required(requiredField)
     .min(8, minLength)
-    .matches(/[A-ZА-Я]/g, uppercaseLetter)
-    .matches(/\d/g, passwordNumber),
+    .matches(RegularExpressions.containUppercaseLetter, uppercaseLetter)
+    .matches(RegularExpressions.containNumber, passwordNumber),
 });
 export const schemaStepTwo = yup.object().shape({
   firstName: yup.string().required(requiredField),
@@ -38,7 +45,7 @@ const checkOperator = (value: string) => {
 };
 
 const checkNumberLength = (value: string) => {
-  const getInputNumbers = (string: string) => string.replace(/\D/g, '');
+  const getInputNumbers = (string: string) => string.replace(RegularExpressions.onlyNumbers, '');
 
   return getInputNumbers(value).length === 12 ? true : false;
 };
@@ -61,8 +68,8 @@ export const schemaResetPassword = yup.object().shape({
     .string()
     .required(requiredField)
     .min(8, minLength)
-    .matches(/[A-ZА-Я]/g, uppercaseLetter)
-    .matches(/\d/g, passwordNumber),
+    .matches(RegularExpressions.containUppercaseLetter, uppercaseLetter)
+    .matches(RegularExpressions.containNumber, passwordNumber),
 
   passwordConfirmation: yup
     .string()

@@ -3,6 +3,14 @@ import InputMask from 'react-input-mask';
 
 import { Input } from '../login/styled';
 
+enum PhoneMaskElements {
+  type = 'tel',
+  mask = '+375 (99) 999-99-99',
+  maskPlaceholder = 'x',
+  placeholder = 'Введите номер телефона',
+  name = 'phone',
+}
+
 export const PhoneMask = ({
   error,
   control,
@@ -17,20 +25,20 @@ export const PhoneMask = ({
   >;
 }) => (
   <Controller
-    name='phone'
+    name={PhoneMaskElements.name}
     control={control}
     render={(props) => (
       <InputMask
-        maskPlaceholder='x'
-        mask='+375 (99) 999-99-99'
+        maskPlaceholder={PhoneMaskElements.maskPlaceholder}
+        mask={PhoneMaskElements.mask}
         {...props}
-        placeholder='Введите номер телефона'
-        type='tel'
+        placeholder={PhoneMaskElements.placeholder}
+        type={PhoneMaskElements.type}
         onChange={(value): void => {
           props.field.onChange(value);
         }}
       >
-        <Input type='tel' error={error} {...props} name='phone' />
+        <Input type={PhoneMaskElements.type} error={error} {...props} name={PhoneMaskElements.name} />
       </InputMask>
     )}
   />
