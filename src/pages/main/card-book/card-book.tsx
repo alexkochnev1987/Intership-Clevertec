@@ -1,5 +1,6 @@
 import iconCat from '../../../assets/img/icon_cat.png';
-import { Book, HOST } from '../../../store/book-slice';
+import { HOST } from '../../../constants/api';
+import { Book } from '../../../store/book-slice';
 import { Rank } from '../../components/rank/rank';
 
 import { Highlighter } from './highlighter';

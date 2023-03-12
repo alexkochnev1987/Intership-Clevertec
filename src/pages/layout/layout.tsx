@@ -1,5 +1,6 @@
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import axios from 'axios';
 
 import { fetchCategories } from '../../store/categories-slice';
 import { useAppDispatch, useAppSelector } from '../../store/store-hooks';
@@ -20,11 +21,19 @@ export const BurgerContext = createContext<BurgerState>({ close: true, setState:
 
 export const Layout = () => {
   const [burgerState, setBurgerState] = useState(false);
+  const token = useAppSelector((state) => state.user.jwt);
   const loader = useAppSelector((state) => state.loader.loading);
   const errorCategories = useAppSelector((state) => state.categories.error);
   const errorBooks = useAppSelector((state) => state.books.error);
   const errorDescription = useAppSelector((state) => state.description.error);
   const dispatch = useAppDispatch();
+
+  axios.interceptors.request.use((config) => {
+    // eslint-disable-next-line no-param-reassign
+    config.headers.Authorization = token ? `Bearer ${token}` : '';
+
+    return config;
+  });
 
   useEffect(() => {
     dispatch(fetchCategories());

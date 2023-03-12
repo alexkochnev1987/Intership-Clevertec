@@ -1,9 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+import { booksRequestUrl, HOST } from '../constants/api';
+import { ErrorMessages } from '../constants/errors';
 
 import { setLoadingFalse, setLoadingTrue } from './loader-slice';
-
-export const HOST = 'https://strapi.cleverland.by';
 
 export interface Book {
   issueYear: string;
@@ -41,41 +43,30 @@ export interface Book {
 }
 
 interface BookReducerState {
-  categories: Categories[];
   books: Book[];
   loading: boolean;
   error: string | undefined;
 }
 
 const initialState: BookReducerState = {
-  categories: [],
   books: [],
   loading: false,
   error: undefined,
 };
 
-interface Categories {
-  name: string;
-  path: string;
-  id: number;
-}
-
 export const fetchBooks = createAsyncThunk<Book[], undefined, { rejectValue: string }>(
   'books/fetchBooks',
   async (_, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
-    const response = await fetch(`${HOST}/api/books`);
+    try {
+      const { data } = await axios.get<Book[]>(HOST + booksRequestUrl);
 
-    if (!response.ok) {
+      return data;
+    } catch (error) {
+      return rejectWithValue(ErrorMessages.server);
+    } finally {
       dispatch(setLoadingFalse());
-
-      return rejectWithValue('Server Error');
     }
-    const data: Book[] = await response.json();
-
-    dispatch(setLoadingFalse());
-
-    return data;
   }
 );
 

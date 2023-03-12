@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SwiperCore, { FreeMode, Navigation, Pagination, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { HOST } from '../../../store/book-slice';
+import { HOST } from '../../../constants/api';
 import { ImageBook } from '../../../store/description-slice';
 
 import './swiper.css';

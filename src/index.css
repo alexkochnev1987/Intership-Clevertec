@@ -520,3 +520,7 @@ p {
     line-height: 18px;
   }
 }
+
+.rotate-arrow {
+    transform: rotate(180deg) translate(0, 3px);
+}

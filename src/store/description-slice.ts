@@ -1,7 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-import { HOST } from './book-slice';
+import { booksRequestUrl, HOST } from '../constants/api';
+import { ErrorMessages } from '../constants/errors';
+
 import { setLoadingFalse, setLoadingTrue } from './loader-slice';
 
 export interface ImageBook {
@@ -77,20 +80,18 @@ const initialState: BookReducerState = {
 
 export const fetchDescription = createAsyncThunk<BookDescription, string, { rejectValue: string }>(
   'books/fetchBookById',
+
   async (id: string, { rejectWithValue, dispatch }) => {
     dispatch(setLoadingTrue());
-    const response = await fetch(`${HOST}/api/books/${id}`);
+    try {
+      const { data } = await axios.get<BookDescription>(`${HOST + booksRequestUrl}/${id}`);
 
-    if (!response.ok) {
+      return data;
+    } catch (error) {
+      return rejectWithValue(ErrorMessages.server);
+    } finally {
       dispatch(setLoadingFalse());
-
-      return rejectWithValue('Server Error');
     }
-    const data: BookDescription = await response.json();
-
-    dispatch(setLoadingFalse());
-
-    return data;
   }
 );
 

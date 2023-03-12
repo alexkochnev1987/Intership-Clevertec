@@ -20,7 +20,9 @@ export const Highlighter = ({ title, search, view }: { title: string; search: st
             return (
               <React.Fragment>
                 {elem}
-                <Highlight data-test-id='highlight-matches'>{c}</Highlight>
+                <Highlight data-test-id='highlight-matches' key={`${elem + index}`}>
+                  {c}
+                </Highlight>
               </React.Fragment>
             );
           }
