@@ -12,7 +12,7 @@
     <img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original-wordmark.svg" title="Git" **alt="Git" width="40" height="40"/>&nbsp;
     <img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" title="NodeJS" alt="NodeJS" width="40" height="40"/>&nbsp;
 </p>
-React, TypeScript, Styled Component, React Hook Form, Yup, Redux Thunk, Axios, Scss, Cupress, Postman, Git.
+React, TypeScript, Styled Component, React Hook Form, Yup, Redux Thunk, Axios, Scss, Cypress, Postman, Git.
 
 ### За отведенный срок нужно выполнить задание и пройти автотесты.
 ### Спринт 6:
