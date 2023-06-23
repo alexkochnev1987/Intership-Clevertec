@@ -1,6 +1,5 @@
-# Cтажировка в компании Clevertec.
-
-## Стек:
+# Intership Clevertec.
+## Technologies:
 <p>
     <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" title="JavaScript" alt="JavaScript" width="40" height="40"/>&nbsp;
     <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" title="Typescript" alt="Typescript" width="40" height="40"/>&nbsp;
@@ -14,6 +13,16 @@
 </p>
 React, TypeScript, Styled Component, React Hook Form, Yup, Redux Thunk, Axios, Scss, Cypress, Postman, Git.
 
+### Within the given deadline, you are required to complete the task and pass the automated tests.
+
+### Sprint 6:
+### Brief Sprint Description:
+In this sprint, you need to implement the functionality for creating, editing, and deleting book reservations, as well as rating and reviewing books. The behavior of the pages should align with the [layout flow.](https://www.figma.com/file/d8LhhLjMkaTfPvAcYQULNv/Library---students-file?node-id=3604%3A32182&t=wI5V45Q6Tv4IEfhd-0)
+
+### Link to the Instruction:
+In this [instruction, ](https://docs.google.com/document/d/17JRBXy4wHg_UmXKQbTPGNi4kL8tGVmjpard5DQEXS50/edit) you will find a detailed description of the tasks for the sixth sprint.
+
+# Cтажировка в компании Clevertec.
 ### За отведенный срок нужно выполнить задание и пройти автотесты.
 ### Спринт 6:
 ### Краткое описание спринта
